@@ -41,6 +41,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return getWritableDatabase().insert(TABLE_USERS, null, values) != -1;
     }
 
+    // Deletes one user by its email
+    public void deleteUser(String email) {
+        getWritableDatabase().delete(TABLE_USERS, "email = ?", new String[]{email});
+    }
+
     public User findByEmail(String email) {
         Cursor cursor = getReadableDatabase().query(
                 TABLE_USERS,

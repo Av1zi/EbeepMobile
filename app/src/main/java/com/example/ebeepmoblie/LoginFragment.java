@@ -6,58 +6,95 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-// Screen 3: login with email and password.
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
+/**
+ * Screen 3: login.
+ * The screen checks the email and the password against the registered users.
+ */
 public class LoginFragment extends Fragment {
+
+    private TextInputLayout layoutEmail;
+    private TextInputLayout layoutPassword;
+    private TextInputEditText inputEmail;
+    private TextInputEditText inputPassword;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        EditText inputEmail = view.findViewById(R.id.inputEmail);
-        EditText inputPassword = view.findViewById(R.id.inputPassword);
-        Button btnLogin = view.findViewById(R.id.btnLogin);
+        layoutEmail = view.findViewById(R.id.layoutEmail);
+        layoutPassword = view.findViewById(R.id.layoutPassword);
+        inputEmail = view.findViewById(R.id.inputEmail);
+        inputPassword = view.findViewById(R.id.inputPassword);
 
-        btnLogin.setOnClickListener(v -> {
-            String email = inputEmail.getText().toString().trim();
-            String password = inputPassword.getText().toString();
-
-            // All fields are required.
-            if (email.isEmpty()) {
-                inputEmail.setError("Please enter email");
-                return;
-            }
-            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                inputEmail.setError("Please enter a valid email");
-                return;
-            }
-            if (password.isEmpty()) {
-                inputPassword.setError("Please enter password");
-                return;
-            }
-
-            User user = UserStore.findByEmail(requireContext(), email);
-            if (user == null) {
-                Toast.makeText(getActivity(), "No user found with this email", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (!user.getPassword().equals(password)) {
-                Toast.makeText(getActivity(), "Wrong password", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // Login OK: greet and open the users list.
-            Toast.makeText(getActivity(), "Welcome, " + user.getName() + "!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getActivity(), UsersActivity.class);
-            startActivity(intent);
-        });
+        view.findViewById(R.id.btnLogin).setOnClickListener(v -> loginUser());
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // If a user just registered, the email is filled in automatically
+        String registeredEmail = ((AuthActivity) requireActivity()).getRegisteredEmail();
+        if (registeredEmail != null && inputEmail.getText().toString().isEmpty()) {
+            inputEmail.setText(registeredEmail);
+        }
+    }
+
+    // Checks the details and opens the users screen
+    private void loginUser() {
+        String email = inputEmail.getText().toString().trim();
+        String password = inputPassword.getText().toString();
+
+        clearErrors();
+
+        if (email.isEmpty()) {
+            showError(layoutEmail, getString(R.string.error_email_required));
+            return;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            showError(layoutEmail, getString(R.string.error_email_invalid));
+            return;
+        }
+        if (password.isEmpty()) {
+            showError(layoutPassword, getString(R.string.error_password_required));
+            return;
+        }
+
+        // Search the user in the ArrayList of the registered users
+        User user = UserStore.findByEmail(requireContext(), email);
+        if (user == null) {
+            showError(layoutEmail, getString(R.string.error_user_not_found));
+            return;
+        }
+        if (!user.getPassword().equals(password)) {
+            showError(layoutPassword, getString(R.string.error_wrong_password));
+            return;
+        }
+
+        // Login succeeded
+        UserStore.setCurrentUser(user);
+        Toast.makeText(getContext(), R.string.msg_login_success, Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(requireActivity(), UsersActivity.class));
+    }
+
+    // Shows a message below the field that has a problem
+    private void showError(TextInputLayout layout, String message) {
+        layout.setError(message);
+        layout.requestFocus();
+    }
+
+    // Clears the messages of the previous check
+    private void clearErrors() {
+        layoutEmail.setError(null);
+        layoutPassword.setError(null);
     }
 }

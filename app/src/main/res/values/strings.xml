@@ -1,3 +1,60 @@
 <resources>
-    <string name="app_name">EbeepMoblie</string>
+    <string name="app_name">ניהול משתמשים</string>
+
+    <!-- Screen 1: main screen -->
+    <string name="screen_main_title">ניהול משתמשים</string>
+    <string name="student_name">זיו אביבי</string>
+    <string name="student_id">ת.ז: 000000000</string>
+    <string name="greeting_guest">ברוך הבא, אורח!</string>
+    <string name="greeting_user">ברוך הבא, %1$s!</string>
+    <string name="btn_continue">המשך לדף הבא</string>
+    <string name="main_image">תמונת המסך הראשי</string>
+
+    <!-- Tabs of screens 2 and 3 -->
+    <string name="tab_login">Login</string>
+    <string name="tab_register">Register</string>
+
+    <!-- Screen 2: register -->
+    <string name="hint_username">שם משתמש</string>
+    <string name="hint_email">אימייל</string>
+    <string name="hint_password">סיסמה</string>
+    <string name="hint_confirm_password">אישור סיסמה</string>
+    <string name="btn_register">רישום</string>
+
+    <!-- Screen 3: login -->
+    <string name="btn_login">כניסה</string>
+
+    <!-- Validation messages -->
+    <string name="error_name_required">יש להזין שם משתמש</string>
+    <string name="error_name_too_long">שם המשתמש יכול להכיל עד 30 תווים</string>
+    <string name="error_email_required">יש להזין אימייל</string>
+    <string name="error_email_invalid">כתובת האימייל אינה תקינה</string>
+    <string name="error_email_taken">האימייל הזה כבר רשום במערכת</string>
+    <string name="error_password_required">יש להזין סיסמה</string>
+    <string name="error_password_short">הסיסמה חייבת להכיל לפחות 6 תווים</string>
+    <string name="error_confirm_required">יש לאשר את הסיסמה</string>
+    <string name="error_confirm_mismatch">הסיסמאות אינן תואמות</string>
+    <string name="error_user_not_found">לא נמצא משתמש עם האימייל הזה</string>
+    <string name="error_wrong_password">הסיסמה שגויה</string>
+    <string name="error_save_failed">שמירת המשתמש נכשלה</string>
+
+    <!-- Messages -->
+    <string name="msg_registered">הרישום בוצע בהצלחה</string>
+    <string name="msg_login_success">הכניסה בוצעה בהצלחה</string>
+    <string name="msg_deleted">המשתמש נמחק</string>
+
+    <!-- Screen 4: registered users list -->
+    <string name="screen_users_title">רשימת הנרשמים</string>
+    <string name="greeting_welcome_back">ברוך הבא!</string>
+    <string name="label_name">שם: %1$s</string>
+    <string name="label_email">אימייל: %1$s</string>
+    <string name="users_count">המשתמשים הרשומים (%1$d)</string>
+    <string name="users_empty">עדיין אין משתמשים רשומים</string>
+    <string name="btn_back">חזרה למסך הראשי</string>
+
+    <!-- Delete user (personal addition) -->
+    <string name="delete_title">מחיקת משתמש</string>
+    <string name="delete_message">למחוק את המשתמש %1$s?</string>
+    <string name="delete_yes">מחיקה</string>
+    <string name="delete_no">ביטול</string>
 </resources>

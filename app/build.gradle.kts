@@ -32,5 +32,7 @@ android {
 dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
+    // Lets the user swipe between the register and the login fragments
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
     testImplementation("junit:junit:4.13.2")
 }

@@ -1,5 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.EbeepMoblie" parent="Theme.AppCompat.Light.NoActionBar" />
+    <!-- Base theme of the app -->
+    <style name="Theme.EbeepMoblie" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryVariant">@color/purple_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/purple</item>
+        <item name="android:statusBarColor">@color/background_main</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowBackground">@color/background_main</item>
+    </style>
+
+    <!-- Same theme with a purple status bar, used for the screens that have the purple header -->
+    <style name="Theme.EbeepMoblie.PurpleBar">
+        <item name="android:statusBarColor">@color/purple</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <!-- One text field: rounded box with a purple stroke -->
+    <style name="AppTextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">14dp</item>
+        <item name="boxCornerRadiusTopEnd">14dp</item>
+        <item name="boxCornerRadiusBottomStart">14dp</item>
+        <item name="boxCornerRadiusBottomEnd">14dp</item>
+        <item name="boxStrokeColor">@color/purple</item>
+        <item name="hintTextColor">@color/purple</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
+    </style>
+
+    <!-- Purple rounded button, like the buttons in the design -->
+    <style name="AppButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/purple</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">28dp</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+    </style>
+
 </resources>

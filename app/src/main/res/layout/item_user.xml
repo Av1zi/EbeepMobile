@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- One row in the users list: username and email -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:layoutDirection="rtl"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:paddingBottom="12dp">
 
-    <!-- Username -->
-    <TextView
-        android:id="@+id/txtName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Username"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:background="@drawable/bg_card"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <!-- Email -->
-    <TextView
-        android:id="@+id/txtEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:text="user@mail.com"
-        android:textSize="14sp" />
+        <!-- Username -->
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
+        <!-- Email -->
+        <TextView
+            android:id="@+id/txtEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 </LinearLayout>
