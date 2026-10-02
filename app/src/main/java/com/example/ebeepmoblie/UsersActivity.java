@@ -31,6 +31,7 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        UserStore.load(this);
         showUsers();
     }
 

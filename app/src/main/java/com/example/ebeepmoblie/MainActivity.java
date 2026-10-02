@@ -15,17 +15,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button btnGo = findViewById(R.id.btnGo);
-        Button btnUsers = findViewById(R.id.btnUsers);
-
-        // Go to register / login screen.
         btnGo.setOnClickListener(v -> {
             Intent intent = new Intent(this, AuthActivity.class);
-            startActivity(intent);
-        });
-
-        // Go straight to the users list.
-        btnUsers.setOnClickListener(v -> {
-            Intent intent = new Intent(this, UsersActivity.class);
             startActivity(intent);
         });
     }

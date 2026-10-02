@@ -42,8 +42,7 @@ public class LoginFragment extends Fragment {
                 return;
             }
 
-            // Check against registered users.
-            User user = UserStore.findByEmail(email);
+            User user = UserStore.findByEmail(requireContext(), email);
             if (user == null) {
                 Toast.makeText(getActivity(), "No user found with this email", Toast.LENGTH_SHORT).show();
                 return;

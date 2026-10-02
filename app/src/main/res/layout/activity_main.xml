@@ -35,7 +35,6 @@
             android:text="Welcome, user!"
             android:textSize="18sp" />
 
-        <!-- TODO: replace with your full name + ID -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,13 +49,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Go to Register / Login" />
-
-        <Button
-            android:id="@+id/btnUsers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="View registered users" />
 
     </LinearLayout>
 </ScrollView>

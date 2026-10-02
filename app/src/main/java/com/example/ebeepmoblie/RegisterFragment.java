@@ -58,14 +58,15 @@ public class RegisterFragment extends Fragment {
                 inputConfirm.setError("Passwords do not match");
                 return;
             }
-            // No duplicate emails.
-            if (UserStore.findByEmail(email) != null) {
+            if (UserStore.findByEmail(requireContext(), email) != null) {
                 inputEmail.setError("This email is already registered");
                 return;
             }
 
-            // Save the new user.
-            UserStore.users.add(new User(name, email, password));
+            if (!UserStore.add(requireContext(), new User(name, email, password))) {
+                Toast.makeText(getActivity(), "Could not save user", Toast.LENGTH_SHORT).show();
+                return;
+            }
             Toast.makeText(getActivity(), "Registered successfully", Toast.LENGTH_SHORT).show();
 
             // Move to login after registering.

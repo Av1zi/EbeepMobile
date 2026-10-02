@@ -1,20 +1,33 @@
 package com.example.ebeepmoblie;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
-// Shared list of all registered users.
-// Static so every screen uses the same list.
 public class UserStore {
 
     public static ArrayList<User> users = new ArrayList<>();
 
-    // Find a user by email. Returns null if not found.
-    public static User findByEmail(String email) {
-        for (User user : users) {
-            if (user.getEmail().equalsIgnoreCase(email)) {
-                return user;
-            }
+    public static void load(Context context) {
+        DatabaseHelper database = new DatabaseHelper(context);
+        users = database.getAllUsers();
+        database.close();
+    }
+
+    public static boolean add(Context context, User user) {
+        DatabaseHelper database = new DatabaseHelper(context);
+        boolean added = database.addUser(user);
+        database.close();
+        if (added) {
+            users.add(user);
         }
-        return null;
+        return added;
+    }
+
+    public static User findByEmail(Context context, String email) {
+        DatabaseHelper database = new DatabaseHelper(context);
+        User user = database.findByEmail(email);
+        database.close();
+        return user;
     }
 }
