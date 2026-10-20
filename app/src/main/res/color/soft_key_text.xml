@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Soft key text: paper color on the black pressed key, grey when the key can't be used -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/on_accent" android:state_pressed="true" />
+    <item android:color="@color/text_secondary" android:state_enabled="false" />
+    <item android:color="@color/text_primary" />
+</selector>

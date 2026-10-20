@@ -73,7 +73,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editMessage"
-                    android:textAlignment="viewStart"
+                    android:textAlignment="textStart"
+                    android:textDirection="ltr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters|textNoSuggestions"

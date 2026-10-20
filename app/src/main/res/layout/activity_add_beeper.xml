@@ -56,16 +56,21 @@
                 android:text="@string/add_server_hint"
                 android:textAppearance="@style/TextAppearance.Ebeep.Caption" />
 
+            <!-- Left to right, so the grey "Beeper_" comes first and the user types the number after it -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutBeeperId"
                 style="@style/AppTextInput"
+                android:layoutDirection="ltr"
+                app:prefixText="@string/add_id_prefix"
+                app:prefixTextColor="@color/text_secondary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/add_beeper_id">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editBeeperId"
-                    android:textAlignment="viewStart"
+                    android:textAlignment="textStart"
+                    android:textDirection="ltr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -75,6 +80,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutPhoneId"
                 style="@style/AppTextInput"
+                android:layoutDirection="ltr"
+                app:prefixText="@string/add_id_prefix"
+                app:prefixTextColor="@color/text_secondary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_item"
@@ -82,7 +90,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editPhoneId"
-                    android:textAlignment="viewStart"
+                    android:textAlignment="textStart"
+                    android:textDirection="ltr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -100,7 +109,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editPassword"
-                    android:textAlignment="viewStart"
+                    android:textAlignment="textStart"
+                    android:textDirection="ltr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />

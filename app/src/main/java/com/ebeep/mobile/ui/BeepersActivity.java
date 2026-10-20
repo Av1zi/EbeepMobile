@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -67,7 +66,7 @@ public class BeepersActivity extends BaseActivity implements BeeperAdapter.OnBee
     @Override
     protected void onResume() {
         super.onResume();
-        // Reload, so a new, renamed or removed beeper shows up when we come back
+        // Reload, so a new, edited or removed beeper shows up when we come back
         loadBeepers();
     }
 
@@ -120,14 +119,14 @@ public class BeepersActivity extends BaseActivity implements BeeperAdapter.OnBee
     @Override
     public void onBeeperLongClick(Beeper beeper) {
         String[] options = {
-                getString(R.string.beepers_option_rename),
+                getString(R.string.beepers_option_edit),
                 getString(R.string.beepers_option_remove)
         };
         new AlertDialog.Builder(this)
                 .setTitle(beeper.getNickname())
                 .setItems(options, (dialog, which) -> {
                     if (which == 0) {
-                        showRenameDialog(beeper);
+                        openEditScreen(beeper);
                     } else {
                         confirmRemove(beeper);
                     }
@@ -135,29 +134,10 @@ public class BeepersActivity extends BaseActivity implements BeeperAdapter.OnBee
                 .show();
     }
 
-    private void showRenameDialog(Beeper beeper) {
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_account_rename, null);
-        EditText editNewName = dialogView.findViewById(R.id.editNewName);
-        editNewName.setText(beeper.getNickname());
-
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.beepers_rename_title)
-                .setView(dialogView)
-                .setPositiveButton(R.string.ok, (dialog, which) -> {
-                    String newName = editNewName.getText().toString().trim();
-                    if (!newName.isEmpty()) {
-                        renameBeeper(beeper.getId(), newName);
-                    }
-                })
-                .setNegativeButton(R.string.cancel, null)
-                .show();
-    }
-
-    private void renameBeeper(long beeperRowId, String newName) {
-        DatabaseHelper database = new DatabaseHelper(this);
-        database.renameBeeper(beeperRowId, newName);
-        database.close();
-        loadBeepers();
+    private void openEditScreen(Beeper beeper) {
+        Intent intent = new Intent(this, AddBeeperActivity.class);
+        intent.putExtra(AddBeeperActivity.EXTRA_EDIT_BEEPER, beeper.getId());
+        startActivity(intent);
     }
 
     private void confirmRemove(Beeper beeper) {

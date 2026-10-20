@@ -8,6 +8,9 @@ import java.util.Locale;
  */
 public class Protocol {
 
+    // Every device id starts with this, for example "Beeper_1"
+    public static final String DEVICE_PREFIX = "Beeper_";
+
     // Topics are "<device id>" + one of these, for example "Beeper_1/inbox"
     public static final String INBOX = "/inbox";
     public static final String GAMES = "/games";

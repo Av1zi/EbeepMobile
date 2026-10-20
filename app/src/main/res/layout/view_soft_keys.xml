@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     The three soft keys at the bottom of a screen, like the beeper's three buttons.
-    The middle one is the main action and is filled. Each screen sets the text, icon and
+    A key turns black only while it is pressed, like on the beeper. Each screen sets the text, icon and
     click listener of the keys it uses, and hides the ones it doesn't (visibility="invisible"
     keeps the other keys in their place).
     Add it with <include layout="@layout/view_soft_keys" />.
@@ -38,7 +38,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/softKeyCenter"
-            style="@style/AppSoftKey.Primary"
+            style="@style/AppSoftKey"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />

@@ -2,10 +2,13 @@ package com.ebeep.mobile.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.ebeep.mobile.R;
 import com.ebeep.mobile.data.Beeper;
+import com.ebeep.mobile.data.Session;
 import com.ebeep.mobile.net.BeeperService;
 import com.ebeep.mobile.net.Protocol;
 
@@ -21,6 +24,8 @@ public class BeeperHomeActivity extends BaseActivity {
 
     private TextView txtMessage;
     private TextView txtMessageInfo;
+    private TextView txtBeeperId;
+    private TextView txtSendsTo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,8 @@ public class BeeperHomeActivity extends BaseActivity {
     private void setUpViews() {
         txtMessage = findViewById(R.id.txtMessage);
         txtMessageInfo = findViewById(R.id.txtMessageInfo);
+        txtBeeperId = findViewById(R.id.txtBeeperId);
+        txtSendsTo = findViewById(R.id.txtSendsTo);
 
         findViewById(R.id.tileChat).setOnClickListener(v ->
                 startActivity(new Intent(this, ChatActivity.class)));
@@ -55,7 +62,40 @@ public class BeeperHomeActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        showDetails();
         showLastMessage();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_beeper_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menuEdit) {
+            Intent intent = new Intent(this, AddBeeperActivity.class);
+            intent.putExtra(AddBeeperActivity.EXTRA_EDIT_BEEPER, Session.getCurrentBeeper(this));
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * The name in the top bar and the connection details. Loaded again in onResume,
+     * because they may have been changed in the edit screen.
+     */
+    private void showDetails() {
+        Beeper beeper = loadCurrentBeeper();
+        if (beeper == null) {
+            return;
+        }
+        setTitle(beeper.getNickname());
+        txtBeeperId.setText(beeper.getBeeperId());
+        // The beeper sends its messages to its partner, and the phone plays that partner
+        txtSendsTo.setText(getString(R.string.home_this_phone, beeper.getPhoneId()));
     }
 
     @Override

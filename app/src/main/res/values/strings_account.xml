@@ -34,10 +34,8 @@
     <string name="beepers_menu_settings">הגדרות</string>
     <string name="beepers_menu_logout">התנתק</string>
     <string name="beepers_notifications_denied">בלי הרשאה לא יוצגו התראות על הודעות חדשות</string>
-    <string name="beepers_option_rename">שנה שם</string>
+    <string name="beepers_option_edit">ערוך פרטים</string>
     <string name="beepers_option_remove">הסר</string>
-    <string name="beepers_rename_title">שינוי שם</string>
-    <string name="beepers_rename_hint">שם חדש</string>
     <string name="beepers_remove_title">הסרת ביפר</string>
     <string name="beepers_remove_message">להסיר את %1$s? גם היסטוריית המשחקים שלו תימחק.</string>
 
@@ -54,12 +52,19 @@
     <string name="add_section_beeper">הביפר</string>
     <string name="add_section_server">חיבור לשרת</string>
     <string name="add_server_hint">הטלפון משחק את תפקיד הצד השני של הביפר, ולכן צריך לתת לו מזהה משלו.</string>
-    <string name="add_default_beeper_id" translatable="false">Beeper_1</string>
-    <string name="add_default_phone_id" translatable="false">Beeper_2</string>
+    <!-- The ids always start with "Beeper_"; the field shows it in grey and the user types the rest -->
+    <string name="add_id_prefix" translatable="false">Beeper_</string>
+    <string name="add_default_beeper_id" translatable="false">1</string>
+    <string name="add_default_phone_id" translatable="false">2</string>
     <string name="add_button">חבר</string>
     <string name="add_error_empty">שדה חובה</string>
     <string name="add_error_same_ids">המזהים חייבים להיות שונים</string>
     <string name="add_saved">הביפר נוסף</string>
+
+    <!-- Screen 5 in edit mode -->
+    <string name="edit_title">עריכת ביפר</string>
+    <string name="edit_button">שמור</string>
+    <string name="edit_saved">הפרטים נשמרו</string>
     <string name="add_failed_title">החיבור נכשל</string>
     <string name="add_failed_message">לא הצלחנו להתחבר לשרת. בדוק שהסיסמה נכונה, שיש חיבור לאינטרנט, ושכתובת השרת בקובץ secrets.properties נכונה.</string>
 
@@ -72,6 +77,11 @@
     <string name="home_chat">צ\'אט</string>
     <string name="home_games">משחקים</string>
     <string name="home_history">היסטוריה</string>
+    <string name="home_menu_edit">ערוך פרטי ביפר</string>
+    <string name="home_details">פרטי חיבור</string>
+    <string name="home_beeper_id">מזהה הביפר</string>
+    <string name="home_sends_to">הביפר שולח הודעות אל</string>
+    <string name="home_this_phone">%1$s (הטלפון הזה)</string>
 
     <!-- Settings -->
     <string name="settings_title">הגדרות</string>

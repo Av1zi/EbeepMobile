@@ -106,14 +106,14 @@ public class ChatActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 txtCounter.setText(getString(R.string.chat_counter, s.length(), Protocol.MAX_MESSAGE_LENGTH));
                 progressLength.setProgress(s.length());
-                setKeyEnabled(btnSend, !s.toString().trim().isEmpty());
+                btnSend.setEnabled(!s.toString().trim().isEmpty());
             }
         });
 
         // The watcher only runs on changes, so set the starting state by hand
         progressLength.setMax(Protocol.MAX_MESSAGE_LENGTH);
         txtCounter.setText(getString(R.string.chat_counter, 0, Protocol.MAX_MESSAGE_LENGTH));
-        setKeyEnabled(btnSend, false);
+        btnSend.setEnabled(false);
     }
 
     /** Reads the beeper row again, because the service may have saved a new message. */
@@ -123,7 +123,7 @@ public class ChatActivity extends BaseActivity {
         if (beeper.getLastMessage() == null) {
             txtSender.setText("");
             txtMessage.setText(R.string.chat_empty);
-            setKeyEnabled(btnSuggest, false);
+            btnSuggest.setEnabled(false);
             return;
         }
 
@@ -133,13 +133,7 @@ public class ChatActivity extends BaseActivity {
         txtSender.setText(getString(R.string.chat_sender_time, sender, time));
         txtMessage.setText(beeper.getLastMessage());
         // A reply only makes sense to a message from the beeper
-        setKeyEnabled(btnSuggest, !beeper.isLastMessageMine());
-    }
-
-    /** The soft key colors don't change when disabled, so fade the key by hand. */
-    private void setKeyEnabled(MaterialButton key, boolean enabled) {
-        key.setEnabled(enabled);
-        key.setAlpha(enabled ? 1f : 0.35f);
+        btnSuggest.setEnabled(!beeper.isLastMessageMine());
     }
 
     private void sendMessage() {
@@ -160,14 +154,14 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void askForSuggestion() {
-        setKeyEnabled(btnSuggest, false);
+        btnSuggest.setEnabled(false);
         progressSuggest.setVisibility(View.VISIBLE);
 
         ReplySuggester.suggest(this, beeper.getLastMessage(), new ReplySuggester.Callback() {
             @Override
             public void onSuggestion(String reply) {
                 progressSuggest.setVisibility(View.GONE);
-                setKeyEnabled(btnSuggest, true);
+                btnSuggest.setEnabled(true);
                 editMessage.setText(reply);
                 editMessage.setSelection(editMessage.getText().length());
             }
@@ -175,7 +169,7 @@ public class ChatActivity extends BaseActivity {
             @Override
             public void onFailed() {
                 progressSuggest.setVisibility(View.GONE);
-                setKeyEnabled(btnSuggest, true);
+                btnSuggest.setEnabled(true);
                 Toast.makeText(ChatActivity.this, R.string.chat_suggest_failed, Toast.LENGTH_SHORT).show();
             }
         });

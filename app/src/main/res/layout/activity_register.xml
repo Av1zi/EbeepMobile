@@ -42,7 +42,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editUsername"
-                    android:textAlignment="viewStart"
+                    android:textAlignment="textStart"
+                    android:textDirection="ltr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
@@ -59,7 +60,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editPassword"
-                    android:textAlignment="viewStart"
+                    android:textAlignment="textStart"
+                    android:textDirection="ltr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
@@ -76,7 +78,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editConfirm"
-                    android:textAlignment="viewStart"
+                    android:textAlignment="textStart"
+                    android:textDirection="ltr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />

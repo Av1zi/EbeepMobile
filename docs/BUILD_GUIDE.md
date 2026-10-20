@@ -285,7 +285,7 @@ Each phase ends with something that runs. Commit after each phase with a clear m
 |---|---|---|
 | 0 | Clean project, new package name, dependencies | No |
 | 1 | Register, log in, stay logged in | No |
-| 2 | Add/rename/remove beepers, home screen, settings | No |
+| 2 | Add/edit/remove beepers, home screen, settings | No |
 | 3 | Phone connects to the broker, sends and receives through MQTT Explorer | No (MQTT Explorer) |
 | 4 | Connection survives leaving the app, notifications, network banner | No |
 | 5 | Chat works with MQTT Explorer, then with the real beeper | Yes, at the end |
@@ -485,7 +485,7 @@ Methods to write, one per job (each about 10 lines, like `addUser` in your demo)
 | `long addBeeper(Beeper beeper)` | INSERT |
 | `ArrayList<Beeper> getBeepers(long userId)` | SELECT … WHERE user_id = ? ORDER BY nickname |
 | `Beeper getBeeper(long id)` | |
-| `void renameBeeper(long id, String nickname)` | UPDATE |
+| `void updateBeeper(long id, Beeper newDetails)` | UPDATE nickname, ids and password |
 | `void deleteBeeper(long id)` | DELETE |
 | `void saveLastMessage(long beeperRowId, String text, boolean mine)` | UPDATE with the current time |
 | `void addGameRecord(long beeperRowId, String game, String result)` | INSERT |
@@ -691,7 +691,9 @@ public class BeeperAdapter extends RecyclerView.Adapter<BeeperAdapter.BeeperView
 }
 ```
 
-Long click opens an `AlertDialog` with `setItems(...)` offering Rename or Remove. Rename shows a second dialog with an `EditText`. Remove asks "בטוח?" before deleting.
+Long click opens an `AlertDialog` with `setItems(...)` offering Edit or Remove. Edit opens the Add Beeper screen with `EXTRA_EDIT_BEEPER` (the row id), which fills the fields and saves with `updateBeeper`. The beeper home screen has the same Edit action as a pencil in its menu. Remove asks "בטוח?" before deleting.
+
+The two id fields only take the part after `Beeper_`: the `TextInputLayout` shows `Beeper_` as a grey `app:prefixText`, and the code adds `Protocol.DEVICE_PREFIX` back before saving.
 
 Log out: show a confirmation `AlertDialog`. On yes, stop the service (phase 4), call `Session.logOut`, and open Login with the clear-task flags.
 
@@ -739,7 +741,7 @@ Stored in SharedPreferences (a second file, `settings`):
 | Button: log out | | Same as the menu item |
 | Button: delete account (red) | | Confirm, then `deleteUser(userId)` (cascade) and log out |
 
-**Done when:** you can add two beepers, rename one, remove one, open a beeper's home screen, and switch dark mode.
+**Done when:** you can add two beepers, edit one, remove one, open a beeper's home screen, and switch dark mode.
 
 ---
 

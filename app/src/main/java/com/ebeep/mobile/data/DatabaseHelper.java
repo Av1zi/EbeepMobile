@@ -159,9 +159,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.getLong(8));
     }
 
-    public void renameBeeper(long id, String nickname) {
+    /** Saves new details for a beeper. The last message and the games stay as they are. */
+    public void updateBeeper(long id, Beeper newDetails) {
         ContentValues values = new ContentValues();
-        values.put("nickname", nickname);
+        values.put("nickname", newDetails.getNickname());
+        values.put("beeper_id", newDetails.getBeeperId());
+        values.put("phone_id", newDetails.getPhoneId());
+        values.put("mqtt_password", newDetails.getMqttPassword());
         getWritableDatabase().update("beepers", values, "id = ?", new String[]{String.valueOf(id)});
     }
 
