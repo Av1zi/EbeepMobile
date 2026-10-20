@@ -2,16 +2,20 @@ package com.ebeep.mobile.ui;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ebeep.mobile.R;
 import com.ebeep.mobile.data.Beeper;
 import com.ebeep.mobile.net.BeeperConnection;
 import com.ebeep.mobile.net.Protocol;
+import com.google.android.material.button.MaterialButton;
 
 /** Screen 8: choose a game and invite the beeper. Waits up to a minute for its answer. */
 public class GamesActivity extends BaseActivity {
@@ -19,6 +23,13 @@ public class GamesActivity extends BaseActivity {
     private static final long WAIT_MILLIS = 60_000;
 
     private Beeper beeper;
+
+    private RecyclerView listGames;
+    private LinearLayoutManager layoutManager;
+    private PagerSnapHelper snapHelper;
+    private View[] dots;
+    // The game that is in the middle of the carousel
+    private int currentGame = 0;
 
     // The game we invited the beeper to, or null when we are not waiting
     private String waitingForGame;
@@ -34,9 +45,60 @@ public class GamesActivity extends BaseActivity {
 
         beeper = loadCurrentBeeper();
 
-        RecyclerView listGames = findViewById(R.id.listGames);
-        listGames.setLayoutManager(new LinearLayoutManager(this));
-        listGames.setAdapter(new GameAdapter(this::sendInvitation));
+        setUpCarousel();
+        setUpSoftKeys();
+        showDots();
+    }
+
+    /** A row of cards that snaps to one game at a time. */
+    private void setUpCarousel() {
+        listGames = findViewById(R.id.listGames);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        listGames.setLayoutManager(layoutManager);
+        listGames.setAdapter(new GameAdapter());
+
+        // Padding on both sides lets the first and the last card stop in the middle
+        int screenWidth = getResources().getDisplayMetrics().widthPixels;
+        int sidePadding = (screenWidth - GameAdapter.cardWidth(this)) / 2;
+        listGames.setPadding(sidePadding, 0, sidePadding, 0);
+
+        snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(listGames);
+        dots = new View[]{findViewById(R.id.dotFirst), findViewById(R.id.dotSecond)};
+
+        listGames.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                View snapView = snapHelper.findSnapView(layoutManager);
+                if (snapView != null) {
+                    currentGame = layoutManager.getPosition(snapView);
+                    showDots();
+                }
+            }
+        });
+    }
+
+    private void setUpSoftKeys() {
+        setUpSoftKey(R.id.softKeyStart, R.string.games_previous, v -> scrollToGame(currentGame - 1));
+        setUpSoftKey(R.id.softKeyCenter, R.string.games_play, v -> sendInvitation(GameAdapter.GAMES[currentGame]));
+        setUpSoftKey(R.id.softKeyEnd, R.string.games_next, v -> scrollToGame(currentGame + 1));
+
+        ((MaterialButton) findViewById(R.id.softKeyStart)).setIconResource(R.drawable.ic_chevron_back);
+        ((MaterialButton) findViewById(R.id.softKeyEnd)).setIconResource(R.drawable.ic_chevron_next);
+        ((MaterialButton) findViewById(R.id.softKeyEnd)).setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_END);
+    }
+
+    private void scrollToGame(int position) {
+        if (position >= 0 && position < GameAdapter.GAMES.length) {
+            listGames.smoothScrollToPosition(position);
+        }
+    }
+
+    /** The dot of the selected game is filled, the other one is only an outline. */
+    private void showDots() {
+        for (int i = 0; i < dots.length; i++) {
+            dots[i].setBackgroundResource(i == currentGame ? R.drawable.ic_play_dot_on : R.drawable.ic_play_dot_off);
+        }
     }
 
     private void sendInvitation(String game) {

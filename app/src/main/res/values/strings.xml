@@ -7,7 +7,6 @@
     <string name="cancel">ביטול</string>
     <string name="yes">כן</string>
     <string name="no">לא</string>
-    <string name="back">חזרה</string>
 
     <!-- Game names -->
     <string name="game_tic_tac_toe">איקס עיגול</string>
@@ -18,6 +17,10 @@
     <string name="invite_message">%1$s מזמין אותך לשחק %2$s</string>
     <string name="invite_accept">קבל</string>
     <string name="invite_decline">דחה</string>
+
+    <!-- Connection badge in the top bar -->
+    <string name="status_connected">מחובר</string>
+    <string name="status_disconnected">לא מחובר</string>
 
     <!-- Network banner -->
     <string name="no_network">אין חיבור לאינטרנט</string>

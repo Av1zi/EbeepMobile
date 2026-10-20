@@ -2,7 +2,6 @@ package com.ebeep.mobile.ui;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -12,6 +11,7 @@ import com.ebeep.mobile.data.Beeper;
 import com.ebeep.mobile.data.DatabaseHelper;
 import com.ebeep.mobile.data.Session;
 import com.ebeep.mobile.net.BeeperConnection;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -26,7 +26,7 @@ public class AddBeeperActivity extends BaseActivity {
     private TextInputEditText editBeeperId;
     private TextInputEditText editPhoneId;
     private TextInputEditText editPassword;
-    private Button btnConnect;
+    private MaterialButton btnConnect;
     private View progress;
 
     @Override
@@ -50,8 +50,11 @@ public class AddBeeperActivity extends BaseActivity {
         editPassword = findViewById(R.id.editPassword);
         progress = findViewById(R.id.progress);
 
-        btnConnect = findViewById(R.id.btnConnect);
-        btnConnect.setOnClickListener(v -> tryConnect());
+        // Soft keys: Cancel on one side, Connect in the middle
+        setUpSoftKey(R.id.softKeyStart, R.string.cancel, v -> finish());
+        setUpSoftKey(R.id.softKeyCenter, R.string.add_button, v -> tryConnect());
+        hideSoftKey(R.id.softKeyEnd);
+        btnConnect = findViewById(R.id.softKeyCenter);
     }
 
     private void tryConnect() {

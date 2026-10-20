@@ -3,18 +3,45 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize" />
+    <include layout="@layout/view_toolbar" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listGames"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:padding="16dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <!-- The side padding is set in code, so the first game starts in the middle -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listGames"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false" />
+
+        <!-- Page dots: the dot of the selected game is filled -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/space_item"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/dotFirst"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_margin="@dimen/space_small" />
+
+            <View
+                android:id="@+id/dotSecond"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_margin="@dimen/space_small" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/view_soft_keys" />
 </LinearLayout>

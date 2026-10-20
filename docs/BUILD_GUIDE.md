@@ -202,7 +202,7 @@ Install **MQTT Explorer** on your computer and connect it to the same broker wit
 
 ```
 app/src/main/java/com/ebeep/mobile/
-├── Secrets.java                 (gitignored: broker URL, Claude API key)
+(secrets.properties in the project root, gitignored: broker address, Claude API key)
 ├── data/
 │   ├── DatabaseHelper.java      tables + all SQL
 │   ├── User.java
@@ -349,22 +349,17 @@ Also remove the unused Compose and Kotlin entries from `gradle/libs.versions.tom
 
 ### 8.4 Secrets
 
-Create `app/src/main/java/com/ebeep/mobile/Secrets.java` and add it to `.gitignore` **before** your first commit with real values:
+Private values go in `secrets.properties` in the project root. It works like a `.env` file. Android can't read a `.env` file at runtime, so Gradle reads this file at build time and turns each value into a constant in the generated `BuildConfig` class. The file is in `.gitignore`:
 
-```java
-package com.ebeep.mobile;
-
-/** Private values that must not be committed to GitHub. */
-public final class Secrets {
-    // Same broker as the beeper's secret.h
-    public static final String BROKER_URL = "ssl://YOUR_BROKER_HOST:8883";
-
-    // From console.anthropic.com
-    public static final String CLAUDE_API_KEY = "YOUR_KEY";
-}
+```properties
+BROKER_HOST=your-broker.hivemq.cloud
+BROKER_PORT=8883
+CLAUDE_API_KEY=your key from console.anthropic.com
 ```
 
-Commit a copy named `Secrets.java.example` with fake values, so anyone cloning the repo knows what to fill in. Write in the book that a real product would keep the API key on a server. For a school project the key lives in the app.
+`app/build.gradle.kts` loads the file and declares one `buildConfigField` per value, with `buildFeatures { buildConfig = true }`. The code then uses `BuildConfig.BROKER_HOST`, `BuildConfig.CLAUDE_API_KEY`, and so on.
+
+`secrets.properties.example` is committed with fake values, so anyone cloning the repo knows what to fill in. Write in the book that the values still end up inside the APK, where a determined person could dig them out, and that a real product would keep the API key on its own server. For a school project, keeping them out of GitHub is enough.
 
 ### 8.5 Manifest
 
@@ -844,7 +839,7 @@ public class BeeperConnection implements MqttCallbackExtended {
 
         new Thread(() -> {
             try {
-                client = new MqttClient(Secrets.BROKER_URL,
+                client = new MqttClient(BROKER_URL,
                         beeper.getPhoneId() + "_phone", new MemoryPersistence());
 
                 MqttConnectOptions options = new MqttConnectOptions();
@@ -1572,7 +1567,7 @@ public class ReplySuggester {
     private static String askClaude(String lastMessage) {
         try {
             AnthropicClient client = AnthropicOkHttpClient.builder()
-                    .apiKey(Secrets.CLAUDE_API_KEY)
+                    .apiKey(BuildConfig.CLAUDE_API_KEY)
                     .build();
 
             MessageCreateParams params = MessageCreateParams.builder()

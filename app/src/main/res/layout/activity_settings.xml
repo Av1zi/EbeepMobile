@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/surface"
-        app:titleTextColor="@color/text_primary" />
+    <include layout="@layout/view_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,62 +15,120 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="@dimen/space_screen">
 
+            <!-- Account -->
             <TextView
-                android:id="@+id/txtUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp" />
+                android:text="@string/settings_section_account"
+                android:textAppearance="@style/TextAppearance.Ebeep.Heading" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchNotifications"
+            <com.google.android.material.card.MaterialCardView
+                style="@style/AppCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:text="@string/settings_notifications" />
+                android:layout_marginTop="@dimen/space_small">
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchSound"
+                <TextView
+                    android:id="@+id/txtUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/touch_target"
+                    android:paddingHorizontal="@dimen/space_item"
+                    android:textAppearance="@style/TextAppearance.Ebeep.Body" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Notifications and look -->
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:text="@string/settings_sound" />
+                android:layout_marginTop="@dimen/space_section"
+                android:text="@string/settings_section_look"
+                android:textAppearance="@style/TextAppearance.Ebeep.Heading" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchDarkMode"
+            <com.google.android.material.card.MaterialCardView
+                style="@style/AppCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:text="@string/settings_dark_mode" />
+                android:layout_marginTop="@dimen/space_small">
 
-            <Button
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchNotifications"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/touch_target"
+                        android:paddingHorizontal="@dimen/space_item"
+                        android:text="@string/settings_notifications"
+                        android:textAppearance="@style/TextAppearance.Ebeep.Body" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_soft"
+                        android:background="@color/divider" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchSound"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/touch_target"
+                        android:paddingHorizontal="@dimen/space_item"
+                        android:text="@string/settings_sound"
+                        android:textAppearance="@style/TextAppearance.Ebeep.Body" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_soft"
+                        android:background="@color/divider" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchDarkMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/touch_target"
+                        android:paddingHorizontal="@dimen/space_item"
+                        android:text="@string/settings_dark_mode"
+                        android:textAppearance="@style/TextAppearance.Ebeep.Body" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Actions -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_section"
+                android:text="@string/settings_section_actions"
+                android:textAppearance="@style/TextAppearance.Ebeep.Heading" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnClearHistory"
                 style="@style/AppButton.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/space_item"
                 android:text="@string/settings_clear_history" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"
-                style="@style/AppButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/settings_logout" />
-
-            <Button
-                android:id="@+id/btnDeleteAccount"
                 style="@style/AppButton.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/settings_delete_account"
-                android:textColor="@color/danger"
-                app:strokeColor="@color/danger" />
+                android:layout_marginTop="@dimen/space_item"
+                android:text="@string/settings_logout" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDeleteAccount"
+                style="@style/AppButton.Danger"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_item"
+                android:text="@string/settings_delete_account" />
 
         </LinearLayout>
     </ScrollView>

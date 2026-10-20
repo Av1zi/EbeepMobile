@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/surface"
-        app:titleTextColor="@color/text_primary" />
+    <include layout="@layout/view_toolbar" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -23,28 +17,48 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:padding="16dp" />
+            android:padding="@dimen/space_screen" />
 
-        <TextView
-            android:id="@+id/txtEmpty"
+        <!-- Shown instead of the list when there are no beepers -->
+        <LinearLayout
+            android:id="@+id/layoutEmpty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="32dp"
-            android:text="@string/beepers_empty"
-            android:textColor="@color/text_secondary"
-            android:textSize="16sp"
-            android:visibility="gone" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/space_screen"
+            android:visibility="gone">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnAddBeeper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/beepers_add"
-            app:srcCompat="@drawable/ic_account_add" />
+            <com.google.android.material.card.MaterialCardView
+                style="@style/AppTile"
+                android:layout_width="96dp"
+                android:layout_height="96dp">
 
+                <ImageView
+                    android:layout_width="@dimen/tile_icon"
+                    android:layout_height="@dimen/tile_icon"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_inbox" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_item"
+                android:text="@string/beepers_empty_title"
+                android:textAppearance="@style/TextAppearance.Ebeep.Heading" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small"
+                android:gravity="center"
+                android:text="@string/beepers_empty"
+                android:textAppearance="@style/TextAppearance.Ebeep.Caption" />
+        </LinearLayout>
     </FrameLayout>
+
+    <include layout="@layout/view_soft_keys" />
 </LinearLayout>

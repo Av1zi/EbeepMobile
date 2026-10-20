@@ -3,7 +3,7 @@ package com.ebeep.mobile.net;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.ebeep.mobile.Secrets;
+import com.ebeep.mobile.BuildConfig;
 import com.ebeep.mobile.data.Beeper;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -30,6 +30,10 @@ public class BeeperConnection implements MqttCallbackExtended {
 
         void onConnectionChanged(boolean connected);
     }
+
+    // The broker from secrets.properties, over TLS ("ssl://"), like the beeper connects
+    private static final String BROKER_URL =
+            "ssl://" + BuildConfig.BROKER_HOST + ":" + BuildConfig.BROKER_PORT;
 
     private static BeeperConnection instance;
 
@@ -68,7 +72,7 @@ public class BeeperConnection implements MqttCallbackExtended {
         MqttClient newClient;
         try {
             // The client id must differ from the real devices, or the broker disconnects one of them
-            newClient = new MqttClient(Secrets.BROKER_URL,
+            newClient = new MqttClient(BROKER_URL,
                     beeper.getPhoneId() + "_phone", new MemoryPersistence());
         } catch (MqttException e) {
             notifyConnectionChanged(false);
@@ -155,7 +159,7 @@ public class BeeperConnection implements MqttCallbackExtended {
      */
     public static boolean testLogin(String phoneId, String password) {
         try {
-            MqttClient testClient = new MqttClient(Secrets.BROKER_URL,
+            MqttClient testClient = new MqttClient(BROKER_URL,
                     phoneId + "_test", new MemoryPersistence());
             MqttConnectOptions options = createOptions(phoneId, password);
             options.setAutomaticReconnect(false);

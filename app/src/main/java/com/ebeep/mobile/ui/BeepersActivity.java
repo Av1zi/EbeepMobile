@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -23,6 +22,7 @@ import com.ebeep.mobile.data.Beeper;
 import com.ebeep.mobile.data.DatabaseHelper;
 import com.ebeep.mobile.data.Session;
 import com.ebeep.mobile.net.BeeperService;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class BeepersActivity extends BaseActivity implements BeeperAdapter.OnBeeperClickListener {
 
     private RecyclerView listBeepers;
-    private TextView txtEmpty;
+    private View layoutEmpty;
 
     private final ActivityResultLauncher<String> notificationPermission =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted -> {
@@ -40,6 +40,11 @@ public class BeepersActivity extends BaseActivity implements BeeperAdapter.OnBee
             });
 
     @Override
+    protected boolean showsConnection() {
+        return false;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beepers);
@@ -47,10 +52,14 @@ public class BeepersActivity extends BaseActivity implements BeeperAdapter.OnBee
         setUpToolbar(R.string.beepers_title, false);
 
         listBeepers = findViewById(R.id.listBeepers);
-        txtEmpty = findViewById(R.id.txtEmpty);
+        layoutEmpty = findViewById(R.id.layoutEmpty);
         listBeepers.setLayoutManager(new LinearLayoutManager(this));
-        findViewById(R.id.btnAddBeeper).setOnClickListener(v ->
+        // Only the middle soft key is used
+        setUpSoftKey(R.id.softKeyCenter, R.string.beepers_add, v ->
                 startActivity(new Intent(this, AddBeeperActivity.class)));
+        ((MaterialButton) findViewById(R.id.softKeyCenter)).setIconResource(R.drawable.ic_add);
+        hideSoftKey(R.id.softKeyStart);
+        hideSoftKey(R.id.softKeyEnd);
 
         askForNotificationPermission();
     }
@@ -68,7 +77,7 @@ public class BeepersActivity extends BaseActivity implements BeeperAdapter.OnBee
         database.close();
 
         listBeepers.setAdapter(new BeeperAdapter(beepers, this));
-        txtEmpty.setVisibility(beepers.isEmpty() ? View.VISIBLE : View.GONE);
+        layoutEmpty.setVisibility(beepers.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
     private void askForNotificationPermission() {

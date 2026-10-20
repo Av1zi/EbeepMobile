@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Chat -->
+    <string name="chat_last_message">ההודעה האחרונה</string>
+    <string name="chat_back">חזרה</string>
     <string name="chat_empty">עדיין אין הודעות</string>
     <string name="chat_me">אני</string>
+    <!-- Who sent the last message and when, for example "אני  14:05  20/10" -->
+    <string name="chat_sender_time">%1$s  %2$s</string>
     <string name="chat_message_hint">הודעה לביפר</string>
     <string name="chat_rules">אותיות באנגלית בלבד, עד 30 תווים</string>
     <string name="chat_counter">%1$d/%2$d</string>
@@ -15,7 +19,9 @@
     <string name="games_title">משחקים</string>
     <string name="games_ttt_rules">שלוש בשורה מנצחות. מי שמתחיל משחק X</string>
     <string name="games_c4_rules">מפילים דיסקיות לעמודות. ארבע בשורה מנצחות</string>
-    <string name="games_invite">שלח הזמנה</string>
+    <string name="games_previous">הקודם</string>
+    <string name="games_next">הבא</string>
+    <string name="games_play">שחק</string>
     <string name="games_waiting_title">מחכה לביפר</string>
     <string name="games_waiting_text">פתחו את המשחק בביפר. ההזמנה תפוג אחרי דקה</string>
     <string name="games_no_answer">הביפר לא ענה להזמנה</string>
@@ -24,15 +30,16 @@
 
     <!-- Game screens (shared) -->
     <string name="play_you_are">אתה %1$s</string>
-    <string name="play_your_color">הצבע שלך</string>
+    <string name="play_you_are_black">אתה השחור</string>
+    <string name="play_you_are_white">אתה הלבן</string>
+    <string name="play_exit">יציאה</string>
+    <string name="play_rematch">משחק חוזר</string>
     <string name="play_your_turn">התור שלך</string>
     <string name="play_beeper_turn">התור של הביפר</string>
-    <string name="play_waiting_rematch">מחכה לביפר...</string>
+    <string name="play_waiting_rematch">מחכה לביפר…</string>
     <string name="play_won">ניצחת!</string>
     <string name="play_lost">הפסדת</string>
     <string name="play_draw">תיקו</string>
-    <string name="play_again">שחק שוב</string>
-    <string name="play_back_to_games">חזרה למשחקים</string>
     <string name="play_rematch_title">משחק נוסף</string>
     <string name="play_rematch_message">הביפר רוצה משחק נוסף</string>
     <string name="play_beeper_left">הביפר יצא מהמשחק</string>
@@ -42,7 +49,10 @@
 
     <!-- History -->
     <string name="history_title">היסטוריית משחקים</string>
-    <string name="history_summary">ניצחונות: %1$d   הפסדים: %2$d   תיקו: %3$d</string>
+    <string name="history_all_games">כל המשחקים</string>
+    <string name="history_wins">ניצחונות</string>
+    <string name="history_losses">הפסדים</string>
+    <string name="history_draws">תיקו</string>
     <string name="history_empty">עדיין לא שיחקתם</string>
     <string name="history_win">ניצחון</string>
     <string name="history_loss">הפסד</string>

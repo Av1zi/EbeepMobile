@@ -1,5 +1,7 @@
 package com.ebeep.mobile.net;
 
+import java.util.Locale;
+
 /**
  * Topic names and message words the beeper firmware understands
  * (taken from the Ebeep firmware: Callbacks.h, TicTacToeState.h, Connect4State.h).
@@ -35,7 +37,7 @@ public class Protocol {
     /** Keeps only characters the beeper can show, in capitals, cut to 30. */
     public static String cleanForBeeper(String text) {
         StringBuilder clean = new StringBuilder();
-        String upper = text.toUpperCase();
+        String upper = text.toUpperCase(Locale.ROOT);
         for (int i = 0; i < upper.length() && clean.length() < MAX_MESSAGE_LENGTH; i++) {
             char c = upper.charAt(i);
             if (ALLOWED_CHARS.indexOf(c) >= 0) {

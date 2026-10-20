@@ -1,13 +1,11 @@
 package com.ebeep.mobile.ui;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.widget.ImageView;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 
 import com.ebeep.mobile.R;
 import com.ebeep.mobile.data.DatabaseHelper;
@@ -22,13 +20,12 @@ public class ConnectFourActivity extends BaseActivity {
 
     private ConnectFourGame game;
     private ConnectFourBoardView boardView;
-    private ImageView imgMyColor;
     private TextView txtStatus;
+    private TextView txtMyColor;
 
     private long beeperRowId;
     private boolean resultSaved;
     private boolean askedForRematch;
-    private AlertDialog resultDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +35,21 @@ public class ConnectFourActivity extends BaseActivity {
         setUpToolbar(R.string.game_connect_four, true);
 
         boardView = findViewById(R.id.boardView);
-        imgMyColor = findViewById(R.id.imgMyColor);
         txtStatus = findViewById(R.id.txtStatus);
+        txtMyColor = findViewById(R.id.txtMyColor);
         beeperRowId = loadCurrentBeeper().getId();
 
         boardView.setOnColumnTapListener(this::onColumnTapped);
         setUpBackButton();
+        setUpSoftKeys();
         startNewGame(getIntent().getBooleanExtra(EXTRA_I_START, false));
+    }
+
+    /** Exit on the left, and "rematch" in the middle once the game is over. */
+    private void setUpSoftKeys() {
+        setUpSoftKey(R.id.softKeyStart, R.string.play_exit, v -> getOnBackPressedDispatcher().onBackPressed());
+        setUpSoftKey(R.id.softKeyCenter, R.string.play_rematch, v -> askForRematch());
+        hideSoftKey(R.id.softKeyEnd);
     }
 
     private void onColumnTapped(int col) {
@@ -61,9 +66,12 @@ public class ConnectFourActivity extends BaseActivity {
         askedForRematch = false;
         boardView.setGame(game);
 
-        // The side that starts is red, the other side is yellow
-        int color = game.getMySymbol() == 'R' ? R.color.disc_red : R.color.disc_yellow;
-        imgMyColor.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, color)));
+        // The side that starts is black, the other side is white
+        boolean iAmBlack = game.getMySymbol() == 'R';
+        txtMyColor.setText(iAmBlack ? R.string.play_you_are_black : R.string.play_you_are_white);
+        // The sample disc goes after the text (on the left in Hebrew)
+        txtMyColor.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
+                iAmBlack ? R.drawable.ic_play_disc_black : R.drawable.ic_play_disc_white, 0);
         updateBoard();
     }
 
@@ -74,8 +82,10 @@ public class ConnectFourActivity extends BaseActivity {
         if (game.isOver() && !resultSaved) {
             resultSaved = true;
             saveResult(resultForRecord());
-            showResultDialog();
         }
+        // The rematch key only shows when the game is over and we haven't asked yet
+        boolean canAskForRematch = game.isOver() && !askedForRematch;
+        findViewById(R.id.softKeyCenter).setVisibility(canAskForRematch ? View.VISIBLE : View.INVISIBLE);
     }
 
     private int statusText() {
@@ -108,18 +118,11 @@ public class ConnectFourActivity extends BaseActivity {
         database.close();
     }
 
-    private void showResultDialog() {
-        resultDialog = new AlertDialog.Builder(this)
-                .setTitle(resultMessage())
-                .setCancelable(false)
-                .setPositiveButton(R.string.play_again, (dialog, which) -> {
-                    askedForRematch = true;
-                    BeeperConnection.get().sendToBeeper(Protocol.GAME_TOPIC_C4,
-                            Protocol.C4 + Protocol.REMATCH, false);
-                    updateBoard();
-                })
-                .setNegativeButton(R.string.play_back_to_games, (dialog, which) -> leaveGame())
-                .show();
+    private void askForRematch() {
+        askedForRematch = true;
+        BeeperConnection.get().sendToBeeper(Protocol.GAME_TOPIC_C4,
+                Protocol.C4 + Protocol.REMATCH, false);
+        updateBoard();
     }
 
     private void leaveGame() {
@@ -170,9 +173,6 @@ public class ConnectFourActivity extends BaseActivity {
     }
 
     private void onRematchRequested() {
-        if (resultDialog != null) {
-            resultDialog.dismiss();
-        }
         if (askedForRematch) {
             // Both asked at once: the same tie-break as for invitations
             boolean iStart = Protocol.phoneStartsOnTie(
@@ -195,9 +195,6 @@ public class ConnectFourActivity extends BaseActivity {
     }
 
     private void showBeeperLeftDialog() {
-        if (resultDialog != null) {
-            resultDialog.dismiss();
-        }
         new AlertDialog.Builder(this)
                 .setTitle(R.string.play_beeper_left)
                 .setCancelable(false)

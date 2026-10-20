@@ -1,105 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/surface"
-        app:titleTextColor="@color/text_primary" />
+    <include layout="@layout/view_toolbar" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="@dimen/space_screen">
+
+            <!-- The last message, like the message screen on the beeper -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/home_last_message"
+                android:textAppearance="@style/TextAppearance.Ebeep.Heading" />
 
             <View
-                android:id="@+id/viewStatusDot"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/ic_account_dot" />
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_strong"
+                android:layout_marginTop="@dimen/space_small"
+                android:background="@color/outline" />
 
             <TextView
-                android:id="@+id/txtStatus"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtMessage"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-        </LinearLayout>
+                android:layout_marginTop="@dimen/space_section"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.Ebeep.Message" />
 
-        <com.google.android.material.card.MaterialCardView
-            style="@style/AppCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            <TextView
+                android:id="@+id/txtMessageInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.Ebeep.Caption" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginTop="@dimen/space_section"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_last_message"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/tileChat"
+                    style="@style/AppTile"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true">
 
-                <TextView
-                    android:id="@+id/txtMessage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp" />
+                    <!-- An ImageView, not a compound drawable, so the icon can be bigger -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        tools:ignore="UseCompoundDrawables">
 
-                <TextView
-                    android:id="@+id/txtMessageInfo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
+                        <ImageView
+                            android:layout_width="@dimen/tile_icon"
+                            android:layout_height="@dimen/tile_icon"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_inbox" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_small"
+                            android:text="@string/home_chat"
+                            android:textAppearance="@style/TextAppearance.Ebeep.Heading" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/tileGames"
+                    style="@style/AppTile"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="@dimen/space_item"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <!-- An ImageView, not a compound drawable, so the icon can be bigger -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="@dimen/tile_icon"
+                            android:layout_height="@dimen/tile_icon"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_games" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_small"
+                            android:text="@string/home_games"
+                            android:textAppearance="@style/TextAppearance.Ebeep.Heading" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/tileHistory"
+                    style="@style/AppTile"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="@dimen/space_item"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <!-- An ImageView, not a compound drawable, so the icon can be bigger -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="@dimen/tile_icon"
+                            android:layout_height="@dimen/tile_icon"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_history" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_small"
+                            android:text="@string/home_history"
+                            android:textAppearance="@style/TextAppearance.Ebeep.Heading" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
-        <Button
-            android:id="@+id/btnChat"
-            style="@style/AppButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/home_chat" />
-
-        <Button
-            android:id="@+id/btnGames"
-            style="@style/AppButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/home_games" />
-
-        <Button
-            android:id="@+id/btnHistory"
-            style="@style/AppButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/home_history" />
-
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

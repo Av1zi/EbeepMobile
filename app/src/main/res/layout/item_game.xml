@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- One game in the carousel. The adapter sets the width, so the next card peeks in. -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/AppCard"
-    android:layout_width="match_parent"
+    style="@style/AppTile"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp">
+    android:layout_margin="@dimen/space_small">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/space_screen">
+
+        <ImageView
+            android:id="@+id/imgGameArt"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:importantForAccessibility="no"
+            android:scaleType="fitCenter" />
 
         <TextView
             android:id="@+id/txtGameName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_primary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="@dimen/space_item"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Ebeep.Heading" />
 
         <TextView
             android:id="@+id/txtGameRules"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/text_secondary"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/btnInvite"
-            style="@style/AppButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/games_invite" />
+            android:layout_marginTop="@dimen/space_small"
+            android:gravity="center"
+            android:minLines="2"
+            android:textAppearance="@style/TextAppearance.Ebeep.Caption" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

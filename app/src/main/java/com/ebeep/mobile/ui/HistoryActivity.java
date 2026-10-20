@@ -32,18 +32,21 @@ public class HistoryActivity extends BaseActivity {
         ArrayList<GameRecord> records = database.getGameRecords(beeperRowId);
         database.close();
 
-        showSummary(R.id.txtSummaryTtt, summary.get(Protocol.TTT));
-        showSummary(R.id.txtSummaryC4, summary.get(Protocol.C4));
+        showSummary(R.id.tileTtt, R.string.game_tic_tac_toe, summary.get(Protocol.TTT));
+        showSummary(R.id.tileC4, R.string.game_connect_four, summary.get(Protocol.C4));
         showRecords(records);
     }
 
     /** counts is {wins, losses, draws}, or null if the game was never played. */
-    private void showSummary(int textViewId, int[] counts) {
+    private void showSummary(int tileId, int gameName, int[] counts) {
         if (counts == null) {
             counts = new int[3];
         }
-        TextView txtSummary = findViewById(textViewId);
-        txtSummary.setText(getString(R.string.history_summary, counts[0], counts[1], counts[2]));
+        View tile = findViewById(tileId);
+        ((TextView) tile.findViewById(R.id.txtSummaryName)).setText(gameName);
+        ((TextView) tile.findViewById(R.id.txtWins)).setText(String.valueOf(counts[0]));
+        ((TextView) tile.findViewById(R.id.txtLosses)).setText(String.valueOf(counts[1]));
+        ((TextView) tile.findViewById(R.id.txtDraws)).setText(String.valueOf(counts[2]));
     }
 
     private void showRecords(ArrayList<GameRecord> records) {
@@ -51,6 +54,6 @@ public class HistoryActivity extends BaseActivity {
         listRecords.setLayoutManager(new LinearLayoutManager(this));
         listRecords.setAdapter(new GameRecordAdapter(records));
 
-        findViewById(R.id.txtEmpty).setVisibility(records.isEmpty() ? View.VISIBLE : View.GONE);
+        findViewById(R.id.layoutEmpty).setVisibility(records.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

@@ -1,114 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize" />
+    <include layout="@layout/view_toolbar" />
 
-    <LinearLayout
+    <!-- Scrolls, so the keyboard never hides the text field on small phones -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-        <com.google.android.material.card.MaterialCardView
-            style="@style/AppCard"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/space_screen">
+
+            <!-- Like the message screen on the beeper: heading, rule, big centered message -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/AppTile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/space_item">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/chat_last_message"
+                        android:textAppearance="@style/TextAppearance.Ebeep.Heading" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_strong"
+                        android:layout_marginTop="@dimen/space_small"
+                        android:background="@color/outline" />
+
+                    <TextView
+                        android:id="@+id/txtMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_item"
+                        android:gravity="center"
+                        android:minHeight="72dp"
+                        android:textAppearance="@style/TextAppearance.Ebeep.Message" />
+
+                    <TextView
+                        android:id="@+id/txtSender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_small"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.Ebeep.Caption" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/AppTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_section"
+                android:hint="@string/chat_message_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editMessage"
+                    android:textAlignment="viewStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:textAppearance="@style/TextAppearance.Ebeep.Message" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Fills up as the message gets closer to the 30 character limit -->
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progressLength"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small"
+                app:indicatorColor="@color/accent"
+                app:trackColor="@color/divider"
+                app:trackCornerRadius="2dp"
+                app:trackThickness="4dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginTop="@dimen/space_small"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txtSender"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp" />
+                    android:layout_weight="1"
+                    android:text="@string/chat_rules"
+                    android:textAppearance="@style/TextAppearance.Ebeep.Caption" />
+
+                <ProgressBar
+                    android:id="@+id/progressSuggest"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="@dimen/space_small"
+                    android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/txtMessage"
-                    android:layout_width="match_parent"
+                    android:id="@+id/txtCounter"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp" />
+                    android:textAppearance="@style/TextAppearance.Ebeep.Caption" />
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnSuggest"
-                style="@style/AppButton.Outlined"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chat_suggest" />
-
-            <ProgressBar
-                android:id="@+id/progressSuggest"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="12dp"
-                android:visibility="gone" />
         </LinearLayout>
+    </ScrollView>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/AppTextInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/chat_message_hint">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapCharacters|textNoSuggestions" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/chat_rules"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/txtCounter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnSend"
-            style="@style/AppButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/chat_send" />
-    </LinearLayout>
+    <include layout="@layout/view_soft_keys" />
 </LinearLayout>

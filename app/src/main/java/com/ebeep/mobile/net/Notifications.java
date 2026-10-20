@@ -1,6 +1,7 @@
 package com.ebeep.mobile.net;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -67,6 +68,8 @@ public class Notifications {
                 context.getString(R.string.notification_invite_text, gameName));
     }
 
+    // Lint can't see that hasPermission() checks POST_NOTIFICATIONS first
+    @SuppressLint("MissingPermission")
     private static void show(Context context, int id, String title, String text) {
         if (!AppSettings.isNotificationsOn(context) || !hasPermission(context)) {
             return;

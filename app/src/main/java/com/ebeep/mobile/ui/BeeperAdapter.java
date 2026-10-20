@@ -38,6 +38,14 @@ public class BeeperAdapter extends RecyclerView.Adapter<BeeperAdapter.BeeperView
         return new BeeperViewHolder(row);
     }
 
+    /** "עכשיו" for the last minute, otherwise "לפני 5 דקות", "לפני שעה" and so on. */
+    private CharSequence timeAgo(View view, long time) {
+        if (System.currentTimeMillis() - time < DateUtils.MINUTE_IN_MILLIS) {
+            return view.getContext().getString(R.string.beepers_just_now);
+        }
+        return DateUtils.getRelativeTimeSpanString(time);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull BeeperViewHolder holder, int position) {
         Beeper beeper = beepers.get(position);
@@ -48,7 +56,7 @@ public class BeeperAdapter extends RecyclerView.Adapter<BeeperAdapter.BeeperView
             holder.txtTime.setText("");
         } else {
             holder.txtLastMessage.setText(beeper.getLastMessage());
-            holder.txtTime.setText(DateUtils.getRelativeTimeSpanString(beeper.getLastMessageTime()));
+            holder.txtTime.setText(timeAgo(holder.itemView, beeper.getLastMessageTime()));
         }
 
         holder.itemView.setOnClickListener(v -> listener.onBeeperClick(beeper));

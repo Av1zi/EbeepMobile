@@ -1,19 +1,23 @@
 package com.ebeep.mobile.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 
 import com.ebeep.mobile.R;
-import com.ebeep.mobile.data.AppSettings;
 import com.ebeep.mobile.data.DatabaseHelper;
 import com.ebeep.mobile.data.Session;
-import com.ebeep.mobile.net.Notifications;
 
 /** Screen 1: the logo for a moment, then Login or My Beepers depending on the saved session. */
+// Lint suggests the system SplashScreen API, but this screen is one of the planned
+// screens of the project (screen 1), so it stays a normal activity.
+@SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
 
     private static final int SPLASH_DELAY_MS = 1500;
@@ -21,12 +25,14 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // The theme must be set before the screen is drawn
-        AppSettings.applyTheme(this);
+
+        // The app is in Hebrew, so every screen, dialog and date is right-to-left and in Hebrew,
+        // even when the phone itself is set to English. It has to be called from a screen
+        // (not from EbeepApp), and Android remembers it for the next times.
+        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("he"));
+
         setContentView(R.layout.activity_splash);
         SystemBars.apply(this, findViewById(R.id.root));
-
-        Notifications.createChannels(this);
 
         new Handler(Looper.getMainLooper()).postDelayed(this::openNextScreen, SPLASH_DELAY_MS);
     }

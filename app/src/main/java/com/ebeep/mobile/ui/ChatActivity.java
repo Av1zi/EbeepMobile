@@ -5,7 +5,6 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,6 +16,8 @@ import com.ebeep.mobile.data.Beeper;
 import com.ebeep.mobile.data.DatabaseHelper;
 import com.ebeep.mobile.net.BeeperConnection;
 import com.ebeep.mobile.net.Protocol;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,8 +32,9 @@ public class ChatActivity extends BaseActivity {
     private TextView txtMessage;
     private TextView txtCounter;
     private EditText editMessage;
-    private Button btnSend;
-    private Button btnSuggest;
+    private LinearProgressIndicator progressLength;
+    private MaterialButton btnSend;
+    private MaterialButton btnSuggest;
     private ProgressBar progressSuggest;
 
     @Override
@@ -45,16 +47,25 @@ public class ChatActivity extends BaseActivity {
         txtMessage = findViewById(R.id.txtMessage);
         txtCounter = findViewById(R.id.txtCounter);
         editMessage = findViewById(R.id.editMessage);
-        btnSend = findViewById(R.id.btnSend);
-        btnSuggest = findViewById(R.id.btnSuggest);
+        progressLength = findViewById(R.id.progressLength);
+        btnSend = findViewById(R.id.softKeyCenter);
+        btnSuggest = findViewById(R.id.softKeyEnd);
         progressSuggest = findViewById(R.id.progressSuggest);
 
         beeper = loadCurrentBeeper();
         setUpToolbar(beeper.getNickname(), true);
         setUpMessageField();
 
-        btnSend.setOnClickListener(v -> sendMessage());
-        btnSuggest.setOnClickListener(v -> askForSuggestion());
+        setUpSoftKeys();
+    }
+
+    /** Back, send and suggest are the three soft keys at the bottom, like on the beeper. */
+    private void setUpSoftKeys() {
+        setUpSoftKey(R.id.softKeyStart, R.string.chat_back, v -> finish());
+        setUpSoftKey(R.id.softKeyCenter, R.string.chat_send, v -> sendMessage());
+        setUpSoftKey(R.id.softKeyEnd, R.string.chat_suggest, v -> askForSuggestion());
+        btnSend.setIconResource(R.drawable.ic_send);
+        btnSuggest.setIconResource(R.drawable.ic_sparkle);
     }
 
     @Override
@@ -94,13 +105,15 @@ public class ChatActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 txtCounter.setText(getString(R.string.chat_counter, s.length(), Protocol.MAX_MESSAGE_LENGTH));
-                btnSend.setEnabled(!s.toString().trim().isEmpty());
+                progressLength.setProgress(s.length());
+                setKeyEnabled(btnSend, !s.toString().trim().isEmpty());
             }
         });
 
         // The watcher only runs on changes, so set the starting state by hand
+        progressLength.setMax(Protocol.MAX_MESSAGE_LENGTH);
         txtCounter.setText(getString(R.string.chat_counter, 0, Protocol.MAX_MESSAGE_LENGTH));
-        btnSend.setEnabled(false);
+        setKeyEnabled(btnSend, false);
     }
 
     /** Reads the beeper row again, because the service may have saved a new message. */
@@ -110,17 +123,23 @@ public class ChatActivity extends BaseActivity {
         if (beeper.getLastMessage() == null) {
             txtSender.setText("");
             txtMessage.setText(R.string.chat_empty);
-            btnSuggest.setEnabled(false);
+            setKeyEnabled(btnSuggest, false);
             return;
         }
 
         String sender = beeper.isLastMessageMine() ? getString(R.string.chat_me) : beeper.getNickname();
         String time = new SimpleDateFormat("HH:mm  dd/MM", Locale.getDefault())
                 .format(new Date(beeper.getLastMessageTime()));
-        txtSender.setText(sender + "  " + time);
+        txtSender.setText(getString(R.string.chat_sender_time, sender, time));
         txtMessage.setText(beeper.getLastMessage());
         // A reply only makes sense to a message from the beeper
-        btnSuggest.setEnabled(!beeper.isLastMessageMine());
+        setKeyEnabled(btnSuggest, !beeper.isLastMessageMine());
+    }
+
+    /** The soft key colors don't change when disabled, so fade the key by hand. */
+    private void setKeyEnabled(MaterialButton key, boolean enabled) {
+        key.setEnabled(enabled);
+        key.setAlpha(enabled ? 1f : 0.35f);
     }
 
     private void sendMessage() {
@@ -141,14 +160,14 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void askForSuggestion() {
-        btnSuggest.setEnabled(false);
+        setKeyEnabled(btnSuggest, false);
         progressSuggest.setVisibility(View.VISIBLE);
 
         ReplySuggester.suggest(this, beeper.getLastMessage(), new ReplySuggester.Callback() {
             @Override
             public void onSuggestion(String reply) {
                 progressSuggest.setVisibility(View.GONE);
-                btnSuggest.setEnabled(true);
+                setKeyEnabled(btnSuggest, true);
                 editMessage.setText(reply);
                 editMessage.setSelection(editMessage.getText().length());
             }
@@ -156,7 +175,7 @@ public class ChatActivity extends BaseActivity {
             @Override
             public void onFailed() {
                 progressSuggest.setVisibility(View.GONE);
-                btnSuggest.setEnabled(true);
+                setKeyEnabled(btnSuggest, true);
                 Toast.makeText(ChatActivity.this, R.string.chat_suggest_failed, Toast.LENGTH_SHORT).show();
             }
         });

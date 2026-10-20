@@ -9,6 +9,7 @@ import com.ebeep.mobile.R;
 import com.ebeep.mobile.data.DatabaseHelper;
 import com.ebeep.mobile.data.PasswordHasher;
 import com.ebeep.mobile.data.Session;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -34,6 +35,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void setUpViews() {
+        // The top bar with a back arrow that returns to the login screen
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.register_title);
+        toolbar.setNavigationIcon(R.drawable.ic_chevron_back);
+        toolbar.setNavigationContentDescription(R.string.cancel);
+        toolbar.setNavigationOnClickListener(v -> finish());
+
         layoutUsername = findViewById(R.id.layoutUsername);
         layoutPassword = findViewById(R.id.layoutPassword);
         layoutConfirm = findViewById(R.id.layoutConfirm);
@@ -42,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         editConfirm = findViewById(R.id.editConfirm);
 
         findViewById(R.id.btnRegister).setOnClickListener(v -> tryRegister());
-        findViewById(R.id.txtLogin).setOnClickListener(v -> finish());
+        findViewById(R.id.btnGoLogin).setOnClickListener(v -> finish());
     }
 
     private void tryRegister() {

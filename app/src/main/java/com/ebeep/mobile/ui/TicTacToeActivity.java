@@ -15,13 +15,14 @@ import com.ebeep.mobile.game.BoardGame;
 import com.ebeep.mobile.game.TicTacToeGame;
 import com.ebeep.mobile.net.BeeperConnection;
 import com.ebeep.mobile.net.Protocol;
-import com.google.android.material.button.MaterialButton;
 
 /** Screen 10: tic-tac-toe against the beeper. */
 public class TicTacToeActivity extends BaseActivity {
 
+    private static final float BOARD_WIDTH_PART = 0.8f;
+
     private TicTacToeGame game;
-    private final MaterialButton[][] cells = new MaterialButton[TicTacToeGame.SIZE][TicTacToeGame.SIZE];
+    private final TextView[][] cells = new TextView[TicTacToeGame.SIZE][TicTacToeGame.SIZE];
 
     private TextView txtSymbol;
     private TextView txtStatus;
@@ -29,7 +30,6 @@ public class TicTacToeActivity extends BaseActivity {
     private long beeperRowId;
     private boolean resultSaved;
     private boolean askedForRematch;
-    private AlertDialog resultDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +42,33 @@ public class TicTacToeActivity extends BaseActivity {
         txtStatus = findViewById(R.id.txtStatus);
         beeperRowId = loadCurrentBeeper().getId();
 
+        setUpBoardSize();
         setUpCells();
         setUpBackButton();
+        setUpSoftKeys();
         startNewGame(getIntent().getBooleanExtra(EXTRA_I_START, false));
     }
 
-    /** Every button has the tag "row,col", so one listener serves all nine. */
+    /** The board is a square that takes 80% of the screen width. */
+    private void setUpBoardSize() {
+        View boardFrame = findViewById(R.id.boardFrame);
+        int size = (int) (getResources().getDisplayMetrics().widthPixels * BOARD_WIDTH_PART);
+        boardFrame.getLayoutParams().width = size;
+        boardFrame.getLayoutParams().height = size;
+    }
+
+    /** Exit on the left, and "rematch" in the middle once the game is over. */
+    private void setUpSoftKeys() {
+        setUpSoftKey(R.id.softKeyStart, R.string.play_exit, v -> getOnBackPressedDispatcher().onBackPressed());
+        setUpSoftKey(R.id.softKeyCenter, R.string.play_rematch, v -> askForRematch());
+        hideSoftKey(R.id.softKeyEnd);
+    }
+
+    /** Every cell has the tag "row,col", so one listener serves all nine. */
     private void setUpCells() {
         GridLayout grid = findViewById(R.id.gridBoard);
         for (int i = 0; i < grid.getChildCount(); i++) {
-            MaterialButton cell = (MaterialButton) grid.getChildAt(i);
+            TextView cell = (TextView) grid.getChildAt(i);
             String[] parts = cell.getTag().toString().split(",");
             cells[Integer.parseInt(parts[0])][Integer.parseInt(parts[1])] = cell;
             cell.setOnClickListener(this::onCellClicked);
@@ -91,8 +108,10 @@ public class TicTacToeActivity extends BaseActivity {
         if (game.isOver() && !resultSaved) {
             resultSaved = true;
             saveResult(resultForRecord());
-            showResultDialog();
         }
+        // The rematch key only shows when the game is over and we haven't asked yet
+        boolean canAskForRematch = game.isOver() && !askedForRematch;
+        findViewById(R.id.softKeyCenter).setVisibility(canAskForRematch ? View.VISIBLE : View.INVISIBLE);
     }
 
     private int statusText() {
@@ -125,18 +144,11 @@ public class TicTacToeActivity extends BaseActivity {
         database.close();
     }
 
-    private void showResultDialog() {
-        resultDialog = new AlertDialog.Builder(this)
-                .setTitle(resultMessage())
-                .setCancelable(false)
-                .setPositiveButton(R.string.play_again, (dialog, which) -> {
-                    askedForRematch = true;
-                    BeeperConnection.get().sendToBeeper(Protocol.GAME_TOPIC_TTT,
-                            Protocol.TTT + Protocol.REMATCH, false);
-                    updateBoard();
-                })
-                .setNegativeButton(R.string.play_back_to_games, (dialog, which) -> leaveGame())
-                .show();
+    private void askForRematch() {
+        askedForRematch = true;
+        BeeperConnection.get().sendToBeeper(Protocol.GAME_TOPIC_TTT,
+                Protocol.TTT + Protocol.REMATCH, false);
+        updateBoard();
     }
 
     private void leaveGame() {
@@ -187,9 +199,6 @@ public class TicTacToeActivity extends BaseActivity {
     }
 
     private void onRematchRequested() {
-        if (resultDialog != null) {
-            resultDialog.dismiss();
-        }
         if (askedForRematch) {
             // Both asked at once: the same tie-break as for invitations
             boolean iStart = Protocol.phoneStartsOnTie(
@@ -212,9 +221,6 @@ public class TicTacToeActivity extends BaseActivity {
     }
 
     private void showBeeperLeftDialog() {
-        if (resultDialog != null) {
-            resultDialog.dismiss();
-        }
         new AlertDialog.Builder(this)
                 .setTitle(R.string.play_beeper_left)
                 .setCancelable(false)

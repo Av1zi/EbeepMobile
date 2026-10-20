@@ -13,6 +13,7 @@ import com.ebeep.mobile.data.DatabaseHelper;
 import com.ebeep.mobile.data.PasswordHasher;
 import com.ebeep.mobile.data.Session;
 import com.ebeep.mobile.data.User;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 /** Screen 2: log in with an existing username and password. */
@@ -33,13 +34,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setUpViews() {
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+
         editUsername = findViewById(R.id.editUsername);
         editPassword = findViewById(R.id.editPassword);
         checkRemember = findViewById(R.id.checkRemember);
         txtError = findViewById(R.id.txtError);
 
         findViewById(R.id.btnLogin).setOnClickListener(v -> tryLogin());
-        findViewById(R.id.txtRegister).setOnClickListener(v ->
+        findViewById(R.id.btnGoRegister).setOnClickListener(v ->
                 startActivity(new Intent(this, RegisterActivity.class)));
     }
 

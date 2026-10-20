@@ -7,6 +7,7 @@
     <string name="login_remember">זכור אותי</string>
     <string name="login_button">התחבר</string>
     <string name="login_no_account">אין לך חשבון? הרשם</string>
+    <string name="login_subtitle">התחבר כדי לשלוח הודעות ולשחק עם הביפר שלך</string>
     <string name="login_error_empty">יש למלא שם משתמש וסיסמה</string>
     <string name="login_error_wrong">שם משתמש או סיסמה שגויים</string>
 
@@ -17,6 +18,7 @@
     <string name="register_confirm">אימות סיסמה</string>
     <string name="register_button">הרשם</string>
     <string name="register_have_account">כבר יש לך חשבון? התחבר</string>
+    <string name="register_subtitle">פותחים חשבון חדש בכמה שניות</string>
     <string name="register_error_empty">שדה חובה</string>
     <string name="register_error_short">הסיסמה חייבת להכיל לפחות 6 תווים</string>
     <string name="register_error_mismatch">הסיסמאות לא זהות</string>
@@ -24,7 +26,9 @@
 
     <!-- My beepers -->
     <string name="beepers_title">הביפרים שלי</string>
-    <string name="beepers_empty">עדיין לא חיברת ביפר. לחץ על הכפתור כדי להוסיף.</string>
+    <string name="beepers_empty_title">אין ביפרים עדיין</string>
+    <string name="beepers_empty">לחץ על \"הוסף ביפר\" כדי לחבר את הביפר הראשון שלך</string>
+    <string name="beepers_just_now">עכשיו</string>
     <string name="beepers_no_messages">אין הודעות עדיין</string>
     <string name="beepers_add">הוסף ביפר</string>
     <string name="beepers_menu_settings">הגדרות</string>
@@ -47,25 +51,33 @@
     <string name="add_beeper_id">מזהה הביפר</string>
     <string name="add_phone_id">מזהה הטלפון</string>
     <string name="add_password">סיסמת השרת</string>
+    <string name="add_section_beeper">הביפר</string>
+    <string name="add_section_server">חיבור לשרת</string>
+    <string name="add_server_hint">הטלפון משחק את תפקיד הצד השני של הביפר, ולכן צריך לתת לו מזהה משלו.</string>
+    <string name="add_default_beeper_id" translatable="false">Beeper_1</string>
+    <string name="add_default_phone_id" translatable="false">Beeper_2</string>
     <string name="add_button">חבר</string>
     <string name="add_error_empty">שדה חובה</string>
     <string name="add_error_same_ids">המזהים חייבים להיות שונים</string>
     <string name="add_saved">הביפר נוסף</string>
     <string name="add_failed_title">החיבור נכשל</string>
-    <string name="add_failed_message">לא הצלחנו להתחבר לשרת. בדוק שהסיסמה נכונה, שיש חיבור לאינטרנט, ושכתובת השרת ב-Secrets.java נכונה.</string>
+    <string name="add_failed_message">לא הצלחנו להתחבר לשרת. בדוק שהסיסמה נכונה, שיש חיבור לאינטרנט, ושכתובת השרת בקובץ secrets.properties נכונה.</string>
 
     <!-- Beeper home -->
-    <string name="home_connected">מחובר לשרת</string>
-    <string name="home_disconnected">לא מחובר</string>
     <string name="home_last_message">ההודעה האחרונה</string>
     <string name="home_no_messages">אין הודעות עדיין</string>
     <string name="home_me">אני</string>
+    <!-- Who sent the last message and when, for example "אני  |  14:05 20/10" -->
+    <string name="home_message_info">%1$s  |  %2$s</string>
     <string name="home_chat">צ\'אט</string>
     <string name="home_games">משחקים</string>
     <string name="home_history">היסטוריה</string>
 
     <!-- Settings -->
     <string name="settings_title">הגדרות</string>
+    <string name="settings_section_account">חשבון</string>
+    <string name="settings_section_look">התראות ותצוגה</string>
+    <string name="settings_section_actions">פעולות</string>
     <string name="settings_logged_in_as">מחובר כ: %1$s</string>
     <string name="settings_notifications">התראות</string>
     <string name="settings_sound">צליל ורטט</string>

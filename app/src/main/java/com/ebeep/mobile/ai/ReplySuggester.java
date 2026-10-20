@@ -8,7 +8,7 @@ import com.anthropic.models.messages.ContentBlock;
 import com.anthropic.models.messages.Message;
 import com.anthropic.models.messages.MessageCreateParams;
 import com.anthropic.models.messages.OutputConfig;
-import com.ebeep.mobile.Secrets;
+import com.ebeep.mobile.BuildConfig;
 import com.ebeep.mobile.net.Protocol;
 
 /**
@@ -49,7 +49,7 @@ public class ReplySuggester {
     private static String askClaude(String lastMessage) {
         try {
             AnthropicClient client = AnthropicOkHttpClient.builder()
-                    .apiKey(Secrets.CLAUDE_API_KEY)
+                    .apiKey(BuildConfig.CLAUDE_API_KEY)
                     .build();
 
             MessageCreateParams params = MessageCreateParams.builder()

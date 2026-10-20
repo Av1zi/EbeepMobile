@@ -4,7 +4,10 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="24dp">
+    android:paddingStart="@dimen/space_screen"
+    android:paddingTop="@dimen/space_item"
+    android:paddingEnd="@dimen/space_screen"
+    android:paddingBottom="@dimen/space_item">
 
     <ProgressBar
         android:layout_width="36dp"
@@ -13,9 +16,8 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/space_item"
         android:layout_weight="1"
         android:text="@string/games_waiting_text"
-        android:textColor="@color/text_primary"
-        android:textSize="16sp" />
+        android:textAppearance="@style/TextAppearance.Ebeep.Body" />
 </LinearLayout>

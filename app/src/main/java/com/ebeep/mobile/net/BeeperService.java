@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ServiceInfo;
+import android.os.Build;
 import android.os.IBinder;
 
 import androidx.core.app.ServiceCompat;
@@ -46,9 +47,13 @@ public class BeeperService extends Service implements BeeperConnection.Listener 
             return START_NOT_STICKY;
         }
 
+        // The "remote messaging" service type only exists from Android 14
+        int type = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            type = ServiceInfo.FOREGROUND_SERVICE_TYPE_REMOTE_MESSAGING;
+        }
         ServiceCompat.startForeground(this, FOREGROUND_ID,
-                Notifications.connectedNotification(this, beeper),
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_REMOTE_MESSAGING);
+                Notifications.connectedNotification(this, beeper), type);
 
         BeeperConnection.get().setServiceListener(this);
         BeeperConnection.get().connect(beeper);

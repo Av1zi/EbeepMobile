@@ -2,12 +2,18 @@ package com.ebeep.mobile.ui;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
 import android.net.ConnectivityManager;
 import android.view.View;
+import android.widget.TextView;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.TextViewCompat;
 
 import com.ebeep.mobile.OpenScreens;
 import com.ebeep.mobile.R;
@@ -19,6 +25,7 @@ import com.ebeep.mobile.net.BeeperService;
 import com.ebeep.mobile.net.NetworkReceiver;
 import com.ebeep.mobile.net.Protocol;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
 /**
@@ -41,13 +48,26 @@ public abstract class BaseActivity extends AppCompatActivity
         super.onResume();
         OpenScreens.screenOpened();
         BeeperConnection.get().setScreenListener(this);
-        registerReceiver(networkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        registerNetworkReceiver();
+        updateConnectionBadge();
 
         // An invitation that arrived while the app was in the background
         String game = BeeperConnection.get().takePendingInvitation();
         if (game != null) {
             showInvitationDialog(game);
         }
+    }
+
+    /**
+     * CONNECTIVITY_ACTION is deprecated in favor of ConnectivityManager.NetworkCallback,
+     * but it is still delivered to receivers registered in code, and the project
+     * requirements ask for a BroadcastReceiver.
+     */
+    @SuppressWarnings("deprecation")
+    private void registerNetworkReceiver() {
+        ContextCompat.registerReceiver(this, networkReceiver,
+                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION),
+                ContextCompat.RECEIVER_NOT_EXPORTED);
     }
 
     @Override
@@ -62,8 +82,12 @@ public abstract class BaseActivity extends AppCompatActivity
     protected void setUpToolbar(CharSequence title, boolean showBackArrow) {
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(title);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(showBackArrow);
+        setTitle(title);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(showBackArrow);
+        }
         if (showBackArrow) {
             // The arrow does the same as the phone's Back button
             toolbar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
@@ -72,6 +96,40 @@ public abstract class BaseActivity extends AppCompatActivity
 
     protected void setUpToolbar(@StringRes int titleId, boolean showBackArrow) {
         setUpToolbar(getString(titleId), showBackArrow);
+    }
+
+    /**
+     * True for the screens of one beeper, which show its connection state in the top bar.
+     * The beepers list and the settings are not about one beeper, so they return false.
+     */
+    protected boolean showsConnection() {
+        return true;
+    }
+
+    /** Shows the connection state in the corner of the top bar, like the signal bars on the beeper. */
+    protected void updateConnectionBadge() {
+        TextView badge = findViewById(R.id.txtConnection);
+        if (badge == null || !showsConnection()) {
+            return;
+        }
+        boolean connected = BeeperConnection.get().isConnected();
+        badge.setVisibility(View.VISIBLE);
+        badge.setText(connected ? R.string.status_connected : R.string.status_disconnected);
+        int dotColor = ContextCompat.getColor(this, connected ? R.color.online : R.color.offline);
+        TextViewCompat.setCompoundDrawableTintList(badge, ColorStateList.valueOf(dotColor));
+    }
+
+    /** Sets one of the three soft keys from view_soft_keys.xml and makes it visible. */
+    protected void setUpSoftKey(@IdRes int keyId, @StringRes int textId, View.OnClickListener listener) {
+        MaterialButton key = findViewById(keyId);
+        key.setText(textId);
+        key.setOnClickListener(listener);
+        key.setVisibility(View.VISIBLE);
+    }
+
+    /** Hides a soft key but keeps its place, so the other keys don't move. */
+    protected void hideSoftKey(@IdRes int keyId) {
+        findViewById(keyId).setVisibility(View.INVISIBLE);
     }
 
     /** The beeper that is open right now (from the session), or null. */
@@ -123,7 +181,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
     @Override
     public void onConnectionChanged(boolean connected) {
-        // Screens that show the connection state override this
+        updateConnectionBadge();
     }
 
     private void showInvitationDialog(String game) {

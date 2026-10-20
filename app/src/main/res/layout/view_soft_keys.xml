@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The three soft keys at the bottom of a screen, like the beeper's three buttons.
+    The middle one is the main action and is filled. Each screen sets the text, icon and
+    click listener of the keys it uses, and hides the ones it doesn't (visibility="invisible"
+    keeps the other keys in their place).
+    Add it with <include layout="@layout/view_soft_keys" />.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/surface"
+    tools:ignore="Overdraw"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_strong"
+        android:background="@color/outline" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/soft_key_height"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/softKeyStart"
+            style="@style/AppSoftKey"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="@dimen/line_soft"
+            android:layout_height="match_parent"
+            android:background="@color/outline" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/softKeyCenter"
+            style="@style/AppSoftKey.Primary"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="@dimen/line_soft"
+            android:layout_height="match_parent"
+            android:background="@color/outline" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/softKeyEnd"
+            style="@style/AppSoftKey"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

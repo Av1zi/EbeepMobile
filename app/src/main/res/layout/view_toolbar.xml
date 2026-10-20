@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The top bar of every screen after login, like the beeper's header:
+    the title on one side, the connection state on the other, and a black line under it.
+    Add it with <include layout="@layout/view_toolbar" />.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/surface"
+    tools:ignore="Overdraw"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        style="@style/AppToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <!-- BaseActivity shows and updates this when a beeper is open -->
+        <TextView
+            android:id="@+id/txtConnection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/space_item"
+            android:drawablePadding="6dp"
+            android:textAppearance="@style/TextAppearance.Ebeep.Caption"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/bg_status_dot"
+            xmlns:app="http://schemas.android.com/apk/res-auto" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_strong"
+        android:background="@color/outline" />
+</LinearLayout>

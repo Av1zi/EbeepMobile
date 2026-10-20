@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- One spacing scale for the whole app, so every screen lines up the same way -->
+    <dimen name="space_screen">20dp</dimen>
+    <dimen name="space_section">28dp</dimen>
+    <dimen name="space_item">16dp</dimen>
+    <dimen name="space_small">8dp</dimen>
+
+    <dimen name="corner">16dp</dimen>
+    <dimen name="corner_small">12dp</dimen>
+    <dimen name="line_strong">2dp</dimen>
+    <dimen name="line_soft">1dp</dimen>
+
+    <dimen name="touch_target">56dp</dimen>
+    <dimen name="soft_key_height">64dp</dimen>
+    <dimen name="tile_icon">40dp</dimen>
+    <dimen name="status_dot">10dp</dimen>
+</resources>
