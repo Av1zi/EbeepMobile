@@ -15,29 +15,19 @@
         android:orientation="vertical"
         android:padding="@dimen/space_screen">
 
-        <!-- One summary tile for each game, side by side -->
-        <LinearLayout
+        <!-- One summary tile for each game, one under the other so the labels have room -->
+        <include
+            android:id="@+id/tileTtt"
+            layout="@layout/play_summary_tile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/tileC4"
+            layout="@layout/play_summary_tile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
-
-            <include
-                android:id="@+id/tileTtt"
-                layout="@layout/play_summary_tile"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/space_small"
-                android:layout_weight="1" />
-
-            <include
-                android:id="@+id/tileC4"
-                layout="@layout/play_summary_tile"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_small"
-                android:layout_weight="1" />
-        </LinearLayout>
+            android:layout_marginTop="@dimen/space_item" />
 
         <TextView
             android:layout_width="match_parent"

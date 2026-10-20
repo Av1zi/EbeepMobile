@@ -21,6 +21,8 @@
             <TextView
                 android:id="@+id/txtRecordGame"
                 android:layout_width="match_parent"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.Ebeep.Body"
                 android:textStyle="bold" />
@@ -28,6 +30,8 @@
             <TextView
                 android:id="@+id/txtRecordDate"
                 android:layout_width="match_parent"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.Ebeep.Caption" />
         </LinearLayout>
@@ -35,6 +39,7 @@
         <TextView
             android:id="@+id/txtRecordResult"
             android:layout_width="wrap_content"
+            android:layout_marginStart="@dimen/space_item"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Ebeep.Heading" />
     </LinearLayout>
