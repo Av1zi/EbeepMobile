@@ -24,7 +24,7 @@ public class ReplySuggester {
         void onFailed();
     }
 
-    private static final String MODEL = "claude-opus-5-5";
+    private static final String MODEL = "claude-haiku-5-5";
 
     private static final String INSTRUCTIONS =
             "You suggest a short, friendly reply to a text message from a friend. "
