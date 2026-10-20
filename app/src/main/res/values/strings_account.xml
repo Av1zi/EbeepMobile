@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Login -->
+    <string name="login_title">התחברות</string>
+    <string name="login_username">שם משתמש</string>
+    <string name="login_password">סיסמה</string>
+    <string name="login_remember">זכור אותי</string>
+    <string name="login_button">התחבר</string>
+    <string name="login_no_account">אין לך חשבון? הרשם</string>
+    <string name="login_error_empty">יש למלא שם משתמש וסיסמה</string>
+    <string name="login_error_wrong">שם משתמש או סיסמה שגויים</string>
+
+    <!-- Register -->
+    <string name="register_title">הרשמה</string>
+    <string name="register_username">שם משתמש</string>
+    <string name="register_password">סיסמה</string>
+    <string name="register_confirm">אימות סיסמה</string>
+    <string name="register_button">הרשם</string>
+    <string name="register_have_account">כבר יש לך חשבון? התחבר</string>
+    <string name="register_error_empty">שדה חובה</string>
+    <string name="register_error_short">הסיסמה חייבת להכיל לפחות 6 תווים</string>
+    <string name="register_error_mismatch">הסיסמאות לא זהות</string>
+    <string name="register_error_taken">שם המשתמש כבר תפוס</string>
+
+    <!-- My beepers -->
+    <string name="beepers_title">הביפרים שלי</string>
+    <string name="beepers_empty">עדיין לא חיברת ביפר. לחץ על הכפתור כדי להוסיף.</string>
+    <string name="beepers_no_messages">אין הודעות עדיין</string>
+    <string name="beepers_add">הוסף ביפר</string>
+    <string name="beepers_menu_settings">הגדרות</string>
+    <string name="beepers_menu_logout">התנתק</string>
+    <string name="beepers_notifications_denied">בלי הרשאה לא יוצגו התראות על הודעות חדשות</string>
+    <string name="beepers_option_rename">שנה שם</string>
+    <string name="beepers_option_remove">הסר</string>
+    <string name="beepers_rename_title">שינוי שם</string>
+    <string name="beepers_rename_hint">שם חדש</string>
+    <string name="beepers_remove_title">הסרת ביפר</string>
+    <string name="beepers_remove_message">להסיר את %1$s? גם היסטוריית המשחקים שלו תימחק.</string>
+
+    <!-- Log out (used in two screens) -->
+    <string name="logout_title">התנתקות</string>
+    <string name="logout_message">בטוח שברצונך להתנתק?</string>
+
+    <!-- Add beeper -->
+    <string name="add_title">הוספת ביפר</string>
+    <string name="add_nickname">שם לביפר</string>
+    <string name="add_beeper_id">מזהה הביפר</string>
+    <string name="add_phone_id">מזהה הטלפון</string>
+    <string name="add_password">סיסמת השרת</string>
+    <string name="add_button">חבר</string>
+    <string name="add_error_empty">שדה חובה</string>
+    <string name="add_error_same_ids">המזהים חייבים להיות שונים</string>
+    <string name="add_saved">הביפר נוסף</string>
+    <string name="add_failed_title">החיבור נכשל</string>
+    <string name="add_failed_message">לא הצלחנו להתחבר לשרת. בדוק שהסיסמה נכונה, שיש חיבור לאינטרנט, ושכתובת השרת ב-Secrets.java נכונה.</string>
+
+    <!-- Beeper home -->
+    <string name="home_connected">מחובר לשרת</string>
+    <string name="home_disconnected">לא מחובר</string>
+    <string name="home_last_message">ההודעה האחרונה</string>
+    <string name="home_no_messages">אין הודעות עדיין</string>
+    <string name="home_me">אני</string>
+    <string name="home_chat">צ\'אט</string>
+    <string name="home_games">משחקים</string>
+    <string name="home_history">היסטוריה</string>
+
+    <!-- Settings -->
+    <string name="settings_title">הגדרות</string>
+    <string name="settings_logged_in_as">מחובר כ: %1$s</string>
+    <string name="settings_notifications">התראות</string>
+    <string name="settings_sound">צליל ורטט</string>
+    <string name="settings_dark_mode">מצב כהה</string>
+    <string name="settings_clear_history">נקה היסטוריית משחקים</string>
+    <string name="settings_clear_title">ניקוי היסטוריה</string>
+    <string name="settings_clear_message">למחוק את כל תוצאות המשחקים?</string>
+    <string name="settings_cleared">ההיסטוריה נמחקה</string>
+    <string name="settings_logout">התנתק</string>
+    <string name="settings_delete_account">מחק חשבון</string>
+    <string name="settings_delete_title">מחיקת חשבון</string>
+    <string name="settings_delete_message">החשבון, הביפרים וההיסטוריה יימחקו לצמיתות. להמשיך?</string>
+</resources>

@@ -1,44 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base theme of the app -->
-    <style name="Theme.EbeepMoblie" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/purple</item>
-        <item name="colorPrimaryVariant">@color/purple_dark</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/purple</item>
-        <item name="android:statusBarColor">@color/background_main</item>
+    <!-- Base theme. DayNight follows the dark mode switch in the settings. -->
+    <style name="Theme.EbeepMobile" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorPrimaryVariant">@color/accent_dark</item>
+        <item name="colorOnPrimary">@color/on_accent</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorOnSecondary">@color/on_accent</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:navigationBarColor">@color/background</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:windowBackground">@color/background_main</item>
     </style>
 
-    <!-- Same theme with a purple status bar, used for the screens that have the purple header -->
-    <style name="Theme.EbeepMoblie.PurpleBar">
-        <item name="android:statusBarColor">@color/purple</item>
-        <item name="android:windowLightStatusBar">false</item>
-    </style>
-
-    <!-- One text field: rounded box with a purple stroke -->
+    <!-- Text field: outlined box -->
     <style name="AppTextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxCornerRadiusTopStart">14dp</item>
-        <item name="boxCornerRadiusTopEnd">14dp</item>
-        <item name="boxCornerRadiusBottomStart">14dp</item>
-        <item name="boxCornerRadiusBottomEnd">14dp</item>
-        <item name="boxStrokeColor">@color/purple</item>
-        <item name="hintTextColor">@color/purple</item>
-        <item name="android:textColorHint">@color/text_secondary</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
     </style>
 
-    <!-- Purple rounded button, like the buttons in the design -->
+    <!-- Main action button -->
     <style name="AppButton" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/purple</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="cornerRadius">28dp</item>
-        <item name="android:textSize">17sp</item>
+        <item name="cornerRadius">12dp</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:paddingTop">14dp</item>
-        <item name="android:paddingBottom">14dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <!-- Secondary button (outlined) -->
+    <style name="AppButton.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">12dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <!-- Card used for list rows and info boxes -->
+    <style name="AppCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">@color/divider</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardBackgroundColor">@color/surface</item>
     </style>
 
 </resources>

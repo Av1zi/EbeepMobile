@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/txtSymbol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp" />
+
+        <!-- Same order as the beeper: column 0 on the left -->
+        <GridLayout
+            android:id="@+id/gridBoard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:layoutDirection="ltr"
+            android:rowCount="3">
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/AppButton.Outlined"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:tag="0,0"
+                android:textColor="@color/text_primary"
+                android:textSize="40sp" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/AppButton.Outlined"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:tag="0,1"
+                android:textColor="@color/text_primary"
+                android:textSize="40sp" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/AppButton.Outlined"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:tag="0,2"
+                android:textColor="@color/text_primary"
+                android:textSize="40sp" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/AppButton.Outlined"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:tag="1,0"
+                android:textColor="@color/text_primary"
+                android:textSize="40sp" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/AppButton.Outlined"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:tag="1,1"
+                android:textColor="@color/text_primary"
+                android:textSize="40sp" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/AppButton.Outlined"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:tag="1,2"
+                android:textColor="@color/text_primary"
+                android:textSize="40sp" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/AppButton.Outlined"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:tag="2,0"
+                android:textColor="@color/text_primary"
+                android:textSize="40sp" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/AppButton.Outlined"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:tag="2,1"
+                android:textColor="@color/text_primary"
+                android:textSize="40sp" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/AppButton.Outlined"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:tag="2,2"
+                android:textColor="@color/text_primary"
+                android:textSize="40sp" />
+        </GridLayout>
+    </LinearLayout>
+</LinearLayout>
