@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Connect 4 drawing for the games carousel: a 4x4 board with four black discs in a diagonal row -->
+<!-- Connect 4 drawing for the games carousel: a 4x4 board with four black discs in a diagonal row.
+     Spans 8..92 like the tic-tac-toe drawing so the two read as the same size. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="120dp"
     android:height="120dp"
     android:viewportWidth="100"
     android:viewportHeight="100">
     <path
-        android:pathData="M18,18 L82,18 L82,82 L18,82 Z"
+        android:pathData="M8,8 L92,8 L92,92 L8,92 Z"
         android:strokeColor="@color/outline"
-        android:strokeWidth="1.5" />
+        android:strokeLineJoin="round"
+        android:strokeWidth="3" />
     <path
         android:fillColor="@color/text_primary"
-        android:pathData="M19.5,26 a6.5,6.5 0 1 1 13,0 a6.5,6.5 0 1 1 -13,0 M35.5,42 a6.5,6.5 0 1 1 13,0 a6.5,6.5 0 1 1 -13,0 M51.5,58 a6.5,6.5 0 1 1 13,0 a6.5,6.5 0 1 1 -13,0 M67.5,74 a6.5,6.5 0 1 1 13,0 a6.5,6.5 0 1 1 -13,0" />
+        android:pathData="M10,18.5 a8.5,8.5 0 1 1 17,0 a8.5,8.5 0 1 1 -17,0 M31,39.5 a8.5,8.5 0 1 1 17,0 a8.5,8.5 0 1 1 -17,0 M52,60.5 a8.5,8.5 0 1 1 17,0 a8.5,8.5 0 1 1 -17,0 M73,81.5 a8.5,8.5 0 1 1 17,0 a8.5,8.5 0 1 1 -17,0" />
     <path
-        android:pathData="M36.25,26 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M52.25,26 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M68.25,26 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M20.25,42 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M52.25,42 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M68.25,42 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M20.25,58 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M36.25,58 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M68.25,58 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M20.25,74 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M36.25,74 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M52.25,74 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0"
-        android:strokeColor="@color/text_primary"
-        android:strokeWidth="1.5" />
+        android:pathData="M32.25,18.5 a7.25,7.25 0 1 1 14.5,0 a7.25,7.25 0 1 1 -14.5,0 M53.25,18.5 a7.25,7.25 0 1 1 14.5,0 a7.25,7.25 0 1 1 -14.5,0 M74.25,18.5 a7.25,7.25 0 1 1 14.5,0 a7.25,7.25 0 1 1 -14.5,0 M11.25,39.5 a7.25,7.25 0 1 1 14.5,0 a7.25,7.25 0 1 1 -14.5,0 M53.25,39.5 a7.25,7.25 0 1 1 14.5,0 a7.25,7.25 0 1 1 -14.5,0 M74.25,39.5 a7.25,7.25 0 1 1 14.5,0 a7.25,7.25 0 1 1 -14.5,0 M11.25,60.5 a7.25,7.25 0 1 1 14.5,0 a7.25,7.25 0 1 1 -14.5,0 M32.25,60.5 a7.25,7.25 0 1 1 14.5,0 a7.25,7.25 0 1 1 -14.5,0 M74.25,60.5 a7.25,7.25 0 1 1 14.5,0 a7.25,7.25 0 1 1 -14.5,0 M11.25,81.5 a7.25,7.25 0 1 1 14.5,0 a7.25,7.25 0 1 1 -14.5,0 M32.25,81.5 a7.25,7.25 0 1 1 14.5,0 a7.25,7.25 0 1 1 -14.5,0 M53.25,81.5 a7.25,7.25 0 1 1 14.5,0 a7.25,7.25 0 1 1 -14.5,0"
+        android:strokeColor="@color/outline"
+        android:strokeWidth="2.5" />
 </vector>
