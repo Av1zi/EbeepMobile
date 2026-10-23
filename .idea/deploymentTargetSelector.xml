@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-10-02T15:05:26.453031300Z">
+        <DropdownSelection timestamp="2026-10-21T16:45:34.419404900Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="Default" identifier="serial=;connection=9892d636" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\User1\.android\avd\Oneplus_12.avd" />
             </handle>
           </Target>
         </DropdownSelection>

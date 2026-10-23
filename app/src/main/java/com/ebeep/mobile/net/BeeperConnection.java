@@ -180,6 +180,8 @@ public class BeeperConnection implements MqttCallbackExtended {
         options.setAutomaticReconnect(true);
         options.setCleanSession(true);
         options.setConnectionTimeout(10);
+        // Ping the broker every 4 minutes instead of every minute, so the phone wakes less often
+        options.setKeepAliveInterval(240);
         return options;
     }
 
