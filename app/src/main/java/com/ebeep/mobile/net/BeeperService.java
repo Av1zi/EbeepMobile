@@ -72,6 +72,8 @@ public class BeeperService extends Service implements BeeperConnection.Listener 
             DatabaseHelper database = new DatabaseHelper(this);
             database.saveLastMessage(beeper.getId(), text, false);
             database.close();
+            // Once saved, clear it from the broker, or every reconnect would deliver it again
+            BeeperConnection.get().clearMyInbox();
 
             if (!OpenScreens.isAnyOpen()) {
                 Notifications.showMessage(this, beeper, text);

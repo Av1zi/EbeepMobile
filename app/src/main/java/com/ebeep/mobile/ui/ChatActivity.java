@@ -181,9 +181,8 @@ public class ChatActivity extends BaseActivity {
         super.onBeeperMessage(subTopic, text);
 
         if (subTopic.equals(Protocol.INBOX) && !text.isEmpty()) {
-            // The service already saved the message
+            // The service already saved the message and cleared the inbox
             showLastMessage();
-            BeeperConnection.get().clearMyInbox();
         }
     }
 }
