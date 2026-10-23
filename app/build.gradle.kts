@@ -29,7 +29,7 @@ android {
         // These become constants in the generated BuildConfig class
         buildConfigField("String", "BROKER_HOST", secret("BROKER_HOST"))
         buildConfigField("String", "BROKER_PORT", secret("BROKER_PORT"))
-        buildConfigField("String", "CLAUDE_API_KEY", secret("CLAUDE_API_KEY"))
+        buildConfigField("String", "GOOGLE_API_KEY", secret("GOOGLE_API_KEY"))
     }
 
     buildFeatures {
@@ -61,9 +61,6 @@ dependencies {
 
     // MQTT client: the same protocol the beeper uses
     implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
-
-    // Claude API, for the reply suggestion in the chat
-    implementation("com.anthropic:anthropic-java:2.73.0")
 
     testImplementation("junit:junit:4.13.2")
 }

@@ -57,7 +57,7 @@ You are submitting in **תשפ"ז**, so the rules marked "from תשפ"ז" apply 
 | 6 | **At least two topics** from list 6 (from תשפ"ז). You must explain them in depth. | 6.3 Service, 6.6 Thread/Handler, 6.9 RecyclerView, 6.12 GenAI through an API, 6.14 ActivityResultContract |
 | 7 | A real database with reading and writing. SharedPreferences or files don't count. | SQLite through `SQLiteOpenHelper`: tables `users`, `beepers`, `game_records` |
 | 8 | Advanced topics. Option 1 from תשפ"ז: three or more topics from list 9 | 9.3 custom `View` (Connect 4 board), 9.9 computer networks (MQTT over TLS), 9.15 multiplayer app (live games against the beeper), plus 9.2 notifications |
-| AI | **From תשפ"ז, using AI is required**, through list 6 or list 9 | 6.12: Claude suggests a short reply in the chat screen |
+| AI | **From תשפ"ז, using AI is required**, through list 6 or list 9 | 6.12: Gemini suggests a short reply in the chat screen |
 
 List 10 extras you get for free: 10.1 BroadcastReceiver, 10.2 SharedPreferences, 10.7 CountDownTimer.
 
@@ -117,7 +117,7 @@ Keep this table. You'll copy it into the "טבלת תכולות הפרויקט" 
 | Database | `SQLiteOpenHelper` with plain SQL | Your demo already uses it, and you can read every query out loud. Room would hide the SQL behind annotations. |
 | MQTT | Eclipse Paho Java client `org.eclipse.paho.client.mqttv3` | Plain Java, small, works on Android. The beeper uses the same protocol. |
 | Background work | `new Thread(...)` + `Handler` / `runOnUiThread` | Simplest thing that works, and it is list item 6.6 |
-| AI | Official Anthropic Java SDK (`com.anthropic:anthropic-java`), model `claude-opus-5-5` | One short call. The SDK is a library, so your own code stays Java. |
+| AI | Google Gemini REST API (`generateContent`), model `gemini-3.5-flash-lite`, called with `HttpURLConnection` and `org.json` | Free tier, and one short call. Both classes are built into Android, so no extra library is needed. |
 | Tests | JUnit 4 | Already in the project |
 
 Do **not** use: Kotlin, Compose, Room, LiveData/ViewModel, RxJava, Hilt/Dagger, Retrofit, Gson, Java streams (`.stream().map(...)`), or `Optional` in your own code. Each one adds something you would have to explain without gaining anything here.
@@ -202,7 +202,7 @@ Install **MQTT Explorer** on your computer and connect it to the same broker wit
 
 ```
 app/src/main/java/com/ebeep/mobile/
-(secrets.properties in the project root, gitignored: broker address, Claude API key)
+(secrets.properties in the project root, gitignored: broker address, Google API key)
 ├── data/
 │   ├── DatabaseHelper.java      tables + all SQL
 │   ├── User.java
@@ -221,7 +221,7 @@ app/src/main/java/com/ebeep/mobile/
 │   ├── TicTacToeGame.java
 │   └── ConnectFourGame.java
 ├── ai/
-│   └── ReplySuggester.java      the Claude call
+│   └── ReplySuggester.java      the Gemini call
 └── ui/
     ├── BaseActivity.java        shared behaviour: invitations, network banner
     ├── SplashActivity.java
@@ -326,9 +326,6 @@ dependencies {
     // MQTT client: the same protocol the beeper uses
     implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
 
-    // Claude API, for the reply suggestion in the chat
-    implementation("com.anthropic:anthropic-java:2.34.0")
-
     testImplementation("junit:junit:4.13.2")
 }
 ```
@@ -354,10 +351,10 @@ Private values go in `secrets.properties` in the project root. It works like a `
 ```properties
 BROKER_HOST=your-broker.hivemq.cloud
 BROKER_PORT=8883
-CLAUDE_API_KEY=your key from console.anthropic.com
+GOOGLE_API_KEY=your free key from aistudio.google.com
 ```
 
-`app/build.gradle.kts` loads the file and declares one `buildConfigField` per value, with `buildFeatures { buildConfig = true }`. The code then uses `BuildConfig.BROKER_HOST`, `BuildConfig.CLAUDE_API_KEY`, and so on.
+`app/build.gradle.kts` loads the file and declares one `buildConfigField` per value, with `buildFeatures { buildConfig = true }`. The code then uses `BuildConfig.BROKER_HOST`, `BuildConfig.GOOGLE_API_KEY`, and so on.
 
 `secrets.properties.example` is committed with fake values, so anyone cloning the repo knows what to fill in. Write in the book that the values still end up inside the APK, where a determined person could dig them out, and that a real product would keep the API key on its own server. For a school project, keeping them out of GitHub is enough.
 
@@ -1530,13 +1527,15 @@ Two things to watch:
 
 This covers the required AI topic (6.12, GenAI through an API).
 
-**Feature:** in the chat, a "הצע תשובה" button sends the last message from the beeper to Claude. Claude answers with a short reply the beeper can show, and the reply goes into the text field. The user can edit it before sending.
+**Feature:** in the chat, a "הצע תשובה" button sends the last message from the beeper to Gemini, Google's AI model. Gemini answers with a short reply the beeper can show, and the reply goes into the text field. The user can edit it before sending.
+
+There's no SDK here. The app sends one HTTPS POST with a JSON body to Gemini's `generateContent` endpoint and reads the JSON answer. `HttpURLConnection` and `org.json` are both part of Android, so this adds no dependency.
 
 ```java
 package com.ebeep.mobile.ai;
 
 /**
- * Asks Claude for a short reply to the last message from the beeper.
+ * Asks Gemini (Google's AI model) for a short reply to the last message from the beeper.
  * The answer is cleaned so the beeper can show it (capitals, max 30 characters).
  */
 public class ReplySuggester {
@@ -1546,16 +1545,22 @@ public class ReplySuggester {
         void onFailed();
     }
 
+    // Flash-Lite is fast and has a free tier
+    private static final String MODEL = "gemini-3.5-flash-lite";
+
+    private static final String URL_START =
+            "https://generativelanguage.googleapis.com/v1beta/models/";
+
     private static final String INSTRUCTIONS =
-            "You suggest a short, friendly reply to a text message. "
+            "You suggest a short, friendly reply to a text message from a friend. "
             + "Answer with the reply only, in English, at most 30 characters, "
-            + "using only capital letters A-Z, spaces and . ! ? "
-            + "You may use <3 for a heart.";
+            + "using only capital letters A-Z, spaces and the signs . ! ? "
+            + "You may write <3 for a heart. No emoji and no quotes.";
 
     public static void suggest(Activity activity, String lastMessage, Callback callback) {
         // Network calls are not allowed on the main thread
         new Thread(() -> {
-            String reply = askClaude(lastMessage);
+            String reply = askGemini(lastMessage);
             activity.runOnUiThread(() -> {
                 if (reply == null || reply.isEmpty()) {
                     callback.onFailed();
@@ -1566,45 +1571,77 @@ public class ReplySuggester {
         }).start();
     }
 
-    private static String askClaude(String lastMessage) {
+    private static String askGemini(String lastMessage) {
+        HttpURLConnection connection = null;
         try {
-            AnthropicClient client = AnthropicOkHttpClient.builder()
-                    .apiKey(BuildConfig.CLAUDE_API_KEY)
-                    .build();
+            JSONObject body = new JSONObject()
+                    .put("systemInstruction", textContent(INSTRUCTIONS))
+                    .put("contents", new JSONArray()
+                            .put(textContent("The message I got: " + lastMessage).put("role", "user")));
 
-            MessageCreateParams params = MessageCreateParams.builder()
-                    .model("claude-opus-5-5")
-                    .maxTokens(2000L)
-                    // A short reply doesn't need deep thinking; low effort keeps it fast
-                    .outputConfig(OutputConfig.builder().effort(OutputConfig.Effort.LOW).build())
-                    .system(INSTRUCTIONS)
-                    .addUserMessage("The message I got: " + lastMessage)
-                    .build();
+            connection = (HttpURLConnection) new URL(URL_START + MODEL + ":generateContent").openConnection();
+            connection.setRequestMethod("POST");
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(20000);
+            connection.setRequestProperty("Content-Type", "application/json");
+            // The key goes in a header, not the URL, so it doesn't end up in logs
+            connection.setRequestProperty("x-goog-api-key", BuildConfig.GOOGLE_API_KEY);
+            connection.setDoOutput(true);
 
-            Message response = client.messages().create(params);
+            try (OutputStream out = connection.getOutputStream()) {
+                out.write(body.toString().getBytes(StandardCharsets.UTF_8));
+            }
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                return null;
+            }
+
+            JSONObject response = new JSONObject(readAll(connection.getInputStream()));
+            JSONArray parts = response.getJSONArray("candidates").getJSONObject(0)
+                    .getJSONObject("content").getJSONArray("parts");
 
             StringBuilder text = new StringBuilder();
-            for (ContentBlock block : response.content()) {
-                if (block.isText()) {
-                    text.append(block.asText().text());
-                }
+            for (int i = 0; i < parts.length(); i++) {
+                text.append(parts.getJSONObject(i).optString("text"));
             }
+            // Never trust outside text: the same filter as the keyboard
             return Protocol.cleanForBeeper(text.toString());
         } catch (Exception e) {
-            // No internet, bad key, server error: the button just says it failed
+            // No internet, a bad key, a used-up free quota or a server error: the screen just says it failed
             return null;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
         }
     }
+
+    /** Builds {"parts": [{"text": ...}]}, the shape Gemini uses for a piece of text. */
+    private static JSONObject textContent(String text) throws Exception {
+        return new JSONObject().put("parts", new JSONArray().put(new JSONObject().put("text", text)));
+    }
+
+    // readAll(InputStream) reads the whole answer into a String (a simple byte-buffer loop)
 }
 ```
 
-Imports come from `com.anthropic.client`, `com.anthropic.client.okhttp` and `com.anthropic.models.messages`. In `ChatActivity`, disable the button and show a small `ProgressBar` while waiting. On success, put the text in the field. On failure, show a Toast ("לא הצלחתי להציע תשובה").
+The request body looks like this:
+
+```json
+{
+  "systemInstruction": { "parts": [ { "text": "You suggest a short, friendly reply..." } ] },
+  "contents": [ { "role": "user", "parts": [ { "text": "The message I got: HI HOW ARE YOU" } ] } ]
+}
+```
+
+and the answer text is at `candidates[0].content.parts[*].text`.
+
+Imports come from `org.json` and `java.net` / `java.io`. In `ChatActivity`, disable the button and show a small `ProgressBar` while waiting. On success, put the text in the field. On failure, show a Toast ("לא הצלחתי להציע תשובה").
 
 Notes for the book and the exam:
 - **Why `cleanForBeeper` again:** the model is asked to follow the rules, but the app must never trust outside input. The same filter as the keyboard is applied.
-- **If Claude refuses or returns nothing:** the response has no text block, so `onFailed` runs. The SDK also offers an automatic fallback to another model on refusal. It was left out to keep the code simple, and it isn't needed for one-line chat replies.
+- **If Gemini blocks the answer or returns nothing:** the response has no `candidates` or no text, so reading the JSON throws or the text is empty, and `onFailed` runs.
 - **The key in the app:** acceptable for a school project, but anyone can extract it from the APK. A real product would call its own small server. Say that before the examiner does.
-- **Cost:** one call is a fraction of a cent. Still, set a monthly spend limit in the Anthropic console.
+- **Cost:** the key is on Google's free tier, so it costs nothing. The free tier has a daily request limit. When it's used up, Gemini answers with an error (HTTP 429) and the button just shows the failure Toast.
 - Describe the prompt (`INSTRUCTIONS`) in the book, and why each rule is in it.
 
 ---
@@ -1668,7 +1705,7 @@ Go through every item on a real phone **and** on the emulator:
 
 **Logic:** Explain the Connect 4 win check with a drawing. How does `afterMove` decide WIN/LOSS/DRAW? Why are the game classes free of Android code?
 
-**AI:** What exactly is sent to Claude, and what comes back? Why clean the answer? Where does the key live and why that's a risk?
+**AI:** What exactly is sent to Gemini, and what comes back? Why clean the answer? Where does the key live and why that's a risk?
 
 **Code from outside:** For each class marked as based on a source, what did you change, and why?
 
