@@ -1,0 +1,16 @@
+<!-- The app logo: a pager with a screen and three buttons -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="@color/text_primary">
+    <path
+        android:pathData="M5.5,5h13a2.5,2.5 0,0 1,2.5 2.5v9a2.5,2.5 0,0 1,-2.5 2.5h-13a2.5,2.5 0,0 1,-2.5 -2.5v-9a2.5,2.5 0,0 1,2.5 -2.5zM7,8h10a1,1 0,0 1,1 1v3a1,1 0,0 1,-1 1h-10a1,1 0,0 1,-1 -1v-3a1,1 0,0 1,1 -1z"
+        android:strokeWidth="1.6"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineJoin="round" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M8,14.4a1.6,1.6 0,1 1,0 3.2a1.6,1.6 0,1 1,0 -3.2zM12,14.4a1.6,1.6 0,1 1,0 3.2a1.6,1.6 0,1 1,0 -3.2zM16,14.4a1.6,1.6 0,1 1,0 3.2a1.6,1.6 0,1 1,0 -3.2z" />
+</vector>

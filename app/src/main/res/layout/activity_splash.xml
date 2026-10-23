@@ -19,7 +19,7 @@
             android:layout_height="64dp"
             android:layout_gravity="center"
             android:importantForAccessibility="no"
-            android:src="@drawable/ic_account_logo" />
+            android:src="@drawable/ic_app_logo" />
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
