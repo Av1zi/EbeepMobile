@@ -55,6 +55,7 @@ public class ConnectFourBoardView extends View {
         borderWidth = 2 * density;
         cornerRadius = 12 * density;
         int outline = ContextCompat.getColor(context, R.color.outline);
+        int ink = ContextCompat.getColor(context, R.color.disc_filled);
 
         boardPaint.setColor(ContextCompat.getColor(context, R.color.surface));
 
@@ -68,12 +69,12 @@ public class ConnectFourBoardView extends View {
         blackPaint.setColor(ContextCompat.getColor(context, R.color.disc_filled));
         whitePaint.setColor(ContextCompat.getColor(context, R.color.disc_hollow));
 
-        // The black ring that makes a white disc visible
-        ringPaint.setColor(outline);
+        // The ink ring that makes a white disc visible
+        ringPaint.setColor(ink);
         ringPaint.setStyle(Paint.Style.STROKE);
         ringPaint.setStrokeWidth(borderWidth);
 
-        markerPaint.setColor(outline);
+        markerPaint.setColor(ink);
 
         if (isInEditMode()) {
             ConnectFourGame mockGame = new ConnectFourGame(true);

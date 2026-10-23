@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark mode page dots: small filled dots, the selected one a wider pill -->
+    <dimen name="page_dot">8dp</dimen>
+    <dimen name="page_dot_selected_width">24dp</dimen>
+</resources>

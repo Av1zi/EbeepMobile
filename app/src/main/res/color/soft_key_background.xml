@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- A soft key turns black only while it is pressed, like the beeper's buttons -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/accent" android:state_pressed="true" />
+    <item android:color="@color/fill" android:state_pressed="true" />
     <item android:color="@color/surface" />
 </selector>

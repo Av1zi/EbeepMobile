@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The screen's main soft key (send, play): raised a little in dark mode, like the pressed key -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/fill" android:state_pressed="true" />
+    <item android:color="@color/soft_key_main" />
+</selector>

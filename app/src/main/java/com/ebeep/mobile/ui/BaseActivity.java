@@ -127,6 +127,12 @@ public abstract class BaseActivity extends AppCompatActivity
         key.setVisibility(View.VISIBLE);
     }
 
+    /** Marks the screen's main soft key (send, play). It stands out only in dark mode. */
+    protected void markMainSoftKey(@IdRes int keyId) {
+        MaterialButton key = findViewById(keyId);
+        key.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.soft_key_main_background));
+    }
+
     /** Hides a soft key but keeps its place, so the other keys don't move. */
     protected void hideSoftKey(@IdRes int keyId) {
         findViewById(keyId).setVisibility(View.INVISIBLE);

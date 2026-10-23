@@ -31,14 +31,14 @@
 
             <View
                 android:id="@+id/dotFirst"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="@dimen/page_dot"
+                android:layout_height="@dimen/page_dot"
                 android:layout_margin="@dimen/space_small" />
 
             <View
                 android:id="@+id/dotSecond"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="@dimen/page_dot"
+                android:layout_height="@dimen/page_dot"
                 android:layout_margin="@dimen/space_small" />
         </LinearLayout>
     </LinearLayout>

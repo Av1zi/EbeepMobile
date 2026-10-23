@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Connect 4 drawing for the games carousel: a grid with black and white discs -->
+<!-- Connect 4 drawing for the games carousel: a 4x4 board with four black discs in a diagonal row -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="120dp"
     android:height="120dp"
     android:viewportWidth="100"
     android:viewportHeight="100">
     <path
-        android:pathData="M10,18 L10,82 M26,18 L26,82 M42,18 L42,82 M58,18 L58,82 M74,18 L74,82 M90,18 L90,82 M10,18 L90,18 M10,34 L90,34 M10,50 L90,50 M10,66 L90,66 M10,82 L90,82"
+        android:pathData="M18,18 L82,18 L82,82 L18,82 Z"
         android:strokeColor="@color/outline"
-        android:strokeLineCap="round"
         android:strokeWidth="1.5" />
     <path
-        android:fillColor="@color/outline"
-        android:pathData="M12,74 a6,6 0 1 1 12,0 a6,6 0 1 1 -12,0 M44,74 a6,6 0 1 1 12,0 a6,6 0 1 1 -12,0 M44,58 a6,6 0 1 1 12,0 a6,6 0 1 1 -12,0 M76,74 a6,6 0 1 1 12,0 a6,6 0 1 1 -12,0" />
+        android:fillColor="@color/text_primary"
+        android:pathData="M19.5,26 a6.5,6.5 0 1 1 13,0 a6.5,6.5 0 1 1 -13,0 M35.5,42 a6.5,6.5 0 1 1 13,0 a6.5,6.5 0 1 1 -13,0 M51.5,58 a6.5,6.5 0 1 1 13,0 a6.5,6.5 0 1 1 -13,0 M67.5,74 a6.5,6.5 0 1 1 13,0 a6.5,6.5 0 1 1 -13,0" />
     <path
-        android:pathData="M12,58 a6,6 0 1 1 12,0 a6,6 0 1 1 -12,0 M28,74 a6,6 0 1 1 12,0 a6,6 0 1 1 -12,0 M60,74 a6,6 0 1 1 12,0 a6,6 0 1 1 -12,0"
-        android:strokeColor="@color/outline"
-        android:strokeLineCap="round"
-        android:strokeWidth="2.5" />
+        android:pathData="M36.25,26 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M52.25,26 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M68.25,26 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M20.25,42 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M52.25,42 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M68.25,42 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M20.25,58 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M36.25,58 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M68.25,58 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M20.25,74 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M36.25,74 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0 M52.25,74 a5.75,5.75 0 1 1 11.5,0 a5.75,5.75 0 1 1 -11.5,0"
+        android:strokeColor="@color/text_primary"
+        android:strokeWidth="1.5" />
 </vector>

@@ -3,6 +3,7 @@ package com.ebeep.mobile.ui;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -81,6 +82,7 @@ public class GamesActivity extends BaseActivity {
     private void setUpSoftKeys() {
         setUpSoftKey(R.id.softKeyStart, R.string.games_previous, v -> scrollToGame(currentGame - 1));
         setUpSoftKey(R.id.softKeyCenter, R.string.games_play, v -> sendInvitation(GameAdapter.GAMES[currentGame]));
+        markMainSoftKey(R.id.softKeyCenter);
         setUpSoftKey(R.id.softKeyEnd, R.string.games_next, v -> scrollToGame(currentGame + 1));
 
         ((MaterialButton) findViewById(R.id.softKeyStart)).setIconResource(R.drawable.ic_chevron_back);
@@ -94,10 +96,16 @@ public class GamesActivity extends BaseActivity {
         }
     }
 
-    /** The dot of the selected game is filled, the other one is only an outline. */
+    /** The dot of the selected game is filled, the other one is only an outline (in dark mode: a pill and a dot). */
     private void showDots() {
+        int dotSize = getResources().getDimensionPixelSize(R.dimen.page_dot);
+        int selectedWidth = getResources().getDimensionPixelSize(R.dimen.page_dot_selected_width);
         for (int i = 0; i < dots.length; i++) {
-            dots[i].setBackgroundResource(i == currentGame ? R.drawable.ic_play_dot_on : R.drawable.ic_play_dot_off);
+            boolean selected = i == currentGame;
+            dots[i].setBackgroundResource(selected ? R.drawable.ic_play_dot_on : R.drawable.ic_play_dot_off);
+            ViewGroup.LayoutParams params = dots[i].getLayoutParams();
+            params.width = selected ? selectedWidth : dotSize;
+            dots[i].setLayoutParams(params);
         }
     }
 

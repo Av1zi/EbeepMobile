@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Switch track: filled with ink when on, a soft line color when off -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/accent" android:state_checked="true" />
-    <item android:color="@color/divider" />
+    <item android:color="@color/outline_active" android:state_checked="true" />
+    <item android:color="@color/switch_track_off" />
 </selector>

@@ -15,4 +15,7 @@
     <dimen name="soft_key_height">64dp</dimen>
     <dimen name="tile_icon">40dp</dimen>
     <dimen name="status_dot">10dp</dimen>
+    <!-- Games page dots (in dark mode the selected one is a wider pill) -->
+    <dimen name="page_dot">10dp</dimen>
+    <dimen name="page_dot_selected_width">10dp</dimen>
 </resources>

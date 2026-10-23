@@ -4,6 +4,9 @@
     <color name="accent">#111111</color>
     <color name="accent_dark">#000000</color>
     <color name="on_accent">#F4F3EF</color>
+    <!-- Filled main buttons and a pressed soft key (a softer grey in dark mode) -->
+    <color name="fill">@color/accent</color>
+    <color name="on_fill">@color/on_accent</color>
 
     <color name="background">#F4F3EF</color>
     <color name="surface">#FFFFFF</color>
@@ -11,8 +14,18 @@
     <color name="text_secondary">#5E5E5E</color>
     <!-- Strong lines: boxes, the header rule and the soft keys, like on the beeper -->
     <color name="outline">#111111</color>
+    <!-- Lines that mark the active thing: a focused text field, the selected game, a switch that
+         is on, and the game boards. The same as outline here, a muted grey in dark mode. -->
+    <color name="outline_active">@color/outline</color>
     <!-- Soft lines between list rows -->
     <color name="divider">#DCDAD3</color>
+    <color name="switch_track_off">@color/divider</color>
+    <!-- Soft keys: lines between the keys, a key that can't be used, and the screen's main key -->
+    <color name="soft_key_separator">@color/outline</color>
+    <color name="soft_key_disabled">@color/text_secondary</color>
+    <color name="soft_key_main">@color/surface</color>
+    <!-- Text field box: a plain color here; in dark mode color-night/field_stroke.xml -->
+    <color name="field_stroke">@color/outline_active</color>
 
     <!-- The only colors besides black and white: status and results -->
     <color name="online">#2E7D32</color>
@@ -25,4 +38,6 @@
     <!-- Connect 4: black discs and white discs with a black ring, like on the beeper -->
     <color name="disc_filled">#111111</color>
     <color name="disc_hollow">#FFFFFF</color>
+    <!-- Tic-tac-toe: X and O are both ink here; in dark mode O is a softer grey -->
+    <color name="symbol_o">@color/text_primary</color>
 </resources>

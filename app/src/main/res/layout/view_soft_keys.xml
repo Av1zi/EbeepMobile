@@ -34,7 +34,7 @@
         <View
             android:layout_width="@dimen/line_soft"
             android:layout_height="match_parent"
-            android:background="@color/outline" />
+            android:background="@color/soft_key_separator" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/softKeyCenter"
@@ -46,7 +46,7 @@
         <View
             android:layout_width="@dimen/line_soft"
             android:layout_height="match_parent"
-            android:background="@color/outline" />
+            android:background="@color/soft_key_separator" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/softKeyEnd"

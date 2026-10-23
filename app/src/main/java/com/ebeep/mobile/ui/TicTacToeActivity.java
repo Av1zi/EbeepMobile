@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 
 import com.ebeep.mobile.R;
 import com.ebeep.mobile.data.DatabaseHelper;
@@ -100,6 +101,8 @@ public class TicTacToeActivity extends BaseActivity {
             for (int col = 0; col < TicTacToeGame.SIZE; col++) {
                 char symbol = game.getCell(row, col);
                 cells[row][col].setText(symbol == BoardGame.EMPTY ? "" : String.valueOf(symbol));
+                cells[row][col].setTextColor(ContextCompat.getColor(this,
+                        symbol == 'O' ? R.color.symbol_o : R.color.text_primary));
                 cells[row][col].setEnabled(game.isMyTurn() && symbol == BoardGame.EMPTY);
             }
         }

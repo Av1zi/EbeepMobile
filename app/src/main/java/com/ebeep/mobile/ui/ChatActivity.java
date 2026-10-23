@@ -63,6 +63,7 @@ public class ChatActivity extends BaseActivity {
     private void setUpSoftKeys() {
         setUpSoftKey(R.id.softKeyStart, R.string.chat_back, v -> finish());
         setUpSoftKey(R.id.softKeyCenter, R.string.chat_send, v -> sendMessage());
+        markMainSoftKey(R.id.softKeyCenter);
         setUpSoftKey(R.id.softKeyEnd, R.string.chat_suggest, v -> askForSuggestion());
         btnSend.setIconResource(R.drawable.ic_send);
         btnSuggest.setIconResource(R.drawable.ic_sparkle);

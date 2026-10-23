@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dark mode: the same look with light ink on a dark page -->
-    <color name="accent">#F1F1F1</color>
-    <color name="accent_dark">#FFFFFF</color>
-    <color name="on_accent">#111111</color>
+    <!-- Dark mode: soft warm ink on a warm charcoal page, low contrast so nothing glares -->
+    <color name="accent">#DAD6CC</color>
+    <color name="accent_dark">#EDEAE2</color>
+    <color name="on_accent">#1D1C1A</color>
 
-    <color name="background">#0F0F0F</color>
-    <color name="surface">#1A1A1A</color>
-    <color name="text_primary">#F1F1F1</color>
-    <color name="text_secondary">#A0A0A0</color>
-    <color name="outline">#F1F1F1</color>
-    <color name="divider">#2E2E2E</color>
+    <!-- Filled buttons and a pressed soft key are a slightly raised dark grey, not a bright block -->
+    <color name="fill">#34322E</color>
+    <color name="on_fill">#DAD6CC</color>
 
-    <color name="disc_filled">#F1F1F1</color>
-    <color name="disc_hollow">#1A1A1A</color>
+    <color name="background">#1D1C1A</color>
+    <color name="surface">#262522</color>
+    <color name="text_primary">#DAD6CC</color>
+    <color name="text_secondary">#9D998F</color>
+    <color name="outline">#3B3935</color>
+    <color name="outline_active">#6B675F</color>
+    <color name="divider">#312F2C</color>
+    <color name="switch_track_off">@color/outline</color>
+    <color name="soft_key_separator">@color/divider</color>
+    <color name="soft_key_disabled">#5E5B55</color>
+    <color name="soft_key_main">@color/fill</color>
+
+    <color name="online">#8CBF8E</color>
+    <color name="offline">#5E5B55</color>
+    <color name="danger">#E08A80</color>
+    <color name="result_win">#8CBF8E</color>
+    <color name="result_loss">#E08A80</color>
+    <color name="result_draw">#9D998F</color>
+
+    <color name="disc_filled">#DAD6CC</color>
+    <color name="disc_hollow">#262522</color>
+    <color name="symbol_o">@color/text_secondary</color>
 </resources>
